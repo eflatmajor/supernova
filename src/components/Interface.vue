@@ -3,20 +3,11 @@
     <div id="command-output" ref="commandOutput">
       <Default-Command v-if=" ! hasCommandHistory" input="INFO" output="No command history!" />
 
-      <!-- <div class="command-entry" v-for="item in history" ref="cmdEntry">
-        <p>{{ item }}</p>
-      </div> -->
-
-      <Default-Command v-for="[input, output] in output" :input="input" :output="output">
-      </Default-Command>
+      <div v-for="[input, output] in output" ref="cmdEntry">
+        <Default-Command :input="input" :output="output" />
+      </div>
 
       <!--
-      <Default-Command input="move south" output="You moved southwards to Engine Room." />
-
-      <Default-Command input="whereami" output="Your current location is: Engine Room." />
-
-      <Default-Command input="explain" output="Someone seems to have spilt some space-mayonnaise on the pilot's chair." />
-
       <Default-Command input="test" :output="['testing', 'command', 'with', 'multiple', 'outputs', 'and also testing things that', 'take up', 'more space than the width', 'of the list item elements']" />
     -->
     </div>
@@ -29,10 +20,12 @@
 
 <script>
 /*
-  TODO:
-
-  - Make it so that you can press the UP/DOWN arrows to go through your
-    input history, when the command entry area is highlighted.
+  TODO: Make it so that you can press the UP/DOWN arrows to go through your
+        input history, when the command entry area is highlighted.
+  
+  TODO: Commands need to return an array of [status, output] - the status will
+        be used so that for example if the player does `go north` and that move
+        is not possible, then a status of `FAILURE` will be passed into the command component, so that it can then render a red box instead of the default.
 */
 
 import DefaultCommand from "commands/Default.vue";
@@ -316,9 +309,11 @@ export default {
   },
 
   mounted() {
-    // for (let i = 0; i < 30; i++) {
-    //   this.history.push(Math.random());
-    // }
+    for (let i = 0; i < 30; i++) {
+      this.output.push([
+        "rand", Math.random()
+      ]);
+    }
 
     this.$nextTick(() => {
       this.scroll();
@@ -331,7 +326,7 @@ export default {
       let latestEntry = this.$refs.cmdEntry?.[index];
 
       // console.log(latestEntry);
-      console.log(this.$refs.cmdEntry, latestEntry);
+      console.log("scroll", this.$refs.cmdEntry, latestEntry);
 
       if (latestEntry) {
         latestEntry.scrollIntoView();
@@ -377,7 +372,7 @@ export default {
 
   computed: {
     hasCommandHistory() {
-      return this.history.length > 0;
+      return this.output.length > 0;
     }
   }
 }
@@ -385,7 +380,6 @@ export default {
 
 <style scoped>
 div#interface {
-  /* background-color: red; */
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -398,7 +392,6 @@ div#command-output {
   background-color: var(--purple-3);
   height: calc(100vh - 32px);
   padding: 1em 1em 0 1em;
-  /* overflow: hidden; */
   overflow-y: scroll; 
 }
 
@@ -418,6 +411,5 @@ input {
   background-color: var(--purple-1);
   color: white;
   font-size: 16px;
-
 }
 </style>
