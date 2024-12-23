@@ -45,21 +45,21 @@ div.command {
   font-size: 14px;
   color: white;
   display: flex;
-  border: 2px solid black;
+  /* border: 2px solid black; */
   border-radius: 4px;
   margin: 1em 0;
 }
 
 div.command-input {
-  background-color: red;
+  background-color: var(--purple-1);
   padding: 1em;
   font-weight: bold;
   border-radius: 4px 0 0 4px;
-  border-right: 4px solid black;
+  border-right: 2px solid black;
 }
 
 div.command-output {
-  background-color: blue;
+  background-color: var(--purple-2);
   padding: 1em;
   border-radius: 0 4px 4px 0;
   flex-grow: 1;

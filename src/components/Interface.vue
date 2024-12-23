@@ -181,7 +181,10 @@ const rooms = [
     connections: {
       NORTH: 2, // Communications
       WEST:  4  // Engine Room
-    }
+    },
+    lore: [
+
+    ]
   },
   {
     id: 4,
@@ -189,7 +192,10 @@ const rooms = [
     connections: {
       NORTH: 1, // Cockpit
       EAST:  3, // Medical Bay
-    }
+    },
+    lore: [
+
+    ]
   }
 ];
 
@@ -369,7 +375,7 @@ export default {
 
 <style scoped>
 div#interface {
-  background-color: red;
+  /* background-color: red; */
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -379,7 +385,7 @@ div#interface {
 
 div#command-output {
   flex: 1;
-  background-color: green;
+  background-color: var(--purple-3);
   height: calc(100vh - 32px);
   padding: 1em 1em 0 1em;
   /* overflow: hidden; */
@@ -391,13 +397,14 @@ div.command-entry {
 }
 
 input {
+  font-family: monospace;
   width: 100vw;
   padding: 0 8px;
   margin: 0;
   border: 0;
   height: 32px;
   line-height: 32px;
-  background-color: blue;
+  background-color: var(--purple-1);
   color: white;
   font-size: 16px;
 

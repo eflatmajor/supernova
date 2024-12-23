@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 // import './style.css'
+import './colours.css'
 import App from './App.vue'
 
 import p5 from 'p5';
