@@ -8,6 +8,14 @@
       <div class="command-entry" v-for="item in history" ref="cmdEntry">
         <p>{{ item }}</p>
       </div>
+
+      <Default-Command input="move south" output="You moved southwards to Engine Room." />
+
+      <Default-Command input="whereami" output="Your current location is: Engine Room." />
+
+      <Default-Command input="explain" output="Someone seems to have spilt some space-mayonnaise on the pilot's chair." />
+
+      <Default-Command input="test" :output="['testing', 'command', 'with', 'multiple', 'outputs', 'and also testing things that', 'take up', 'more space than the width', 'of the list item elements']" />
     </div>
 
     <div id="command-input">
@@ -23,6 +31,8 @@
   - Make it so that you can press the UP/DOWN arrows to go through your
     input history, when the command entry area is highlighted.
 */
+
+import DefaultCommand from "commands/Default.vue";
 
 import { randomElement } from "../utilities/array.js";
 
@@ -280,6 +290,10 @@ const commands = [
 ];
 
 export default {
+  components: {
+    DefaultCommand
+  },
+
   data() {
     return {
       inputText: "",
