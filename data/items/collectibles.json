@@ -1,0 +1,87 @@
+[
+  {
+    "id": "normandy",
+    "name": "Normandy SR-1",
+    "set_id": "mass_effect",
+    "lore": [
+      "Logged: The Commanding Officer is ashore. XO Pressly has the deck.",
+      "Equalizing interior pressure with exterior atmosphere."
+    ]
+  },
+  {
+    "id": "hamster",
+    "name": "Space Hamster",
+    "set_id": "mass_effect",
+    "lore": [
+      "In space, no one can hear you *squeak*.",
+      "It's kinda like a Space Gerbil... except, more Hamster-y."
+    ]
+  },
+  {
+    "id": "shepard_vi",
+    "name": "Shepard VI",
+    "set_id": "mass_effect",
+    "lore": [
+      "My personality matrix can predict what the real Commander Shepard would say with seven percent accuracy.",
+      "There's nothing this galaxy can't beat if we all work together."
+    ]
+  },
+  {
+    "id": "tardis",
+    "name": "T.A.R.D.I.S.",
+    "set_id": "doctor_who",
+    "lore": [
+      "Time and Relative Dimension in Space.",
+      "It's... bigger... on the inside!",
+      "It's... smaller... on the outside!"
+    ]
+  },
+  {
+    "id": "sonic",
+    "name": "Sonic Screwdriver",
+    "set_id": "doctor_who",
+    "lore": [
+      "It doesn't do wood!",
+      "Who looks at a screwdriver and thinks 'Ooh, this could be a little more sonic'?"
+    ]
+  },
+  {
+    "id": "fish_fingers_and_custard",
+    "name": "Fish Fingers and Custard",
+    "set_id": "doctor_who",
+    "lore": [
+      "Pears are too squishy and they make your chin wet.",
+      "Would you like a jelly baby?",
+      "Always take a banana to a party, Rose."
+    ]
+  },
+  {
+    "id": "rocinante",
+    "name": "Rocinante Model",
+    "set_id": "the_expanse",
+    "lore": [
+      "This is the warship Rocinante, you’re aware of our capabilities more than anyone.",
+      "Any ship that opens fire on us will feel the sum-total of our state-of-the-art Martian arsenal rammed up its ass."
+    ]
+  },
+  {
+    "id": "millers_hat",
+    "name": "Miller's hat.",
+    "set_id": "the_expanse",
+    "lore": [
+      "Keeps the rain off my head.",
+      "Doors and corners, kid. That's where they get you. Doors and corners.",
+      "I didn’t kill him because he was crazy. I killed him because he was making sense."
+    ]
+  },
+  {
+    "id": "proto_molecule",
+    "name": "Proto Molecule Sample",
+    "set_id": "the_expanse",
+    "lore": [
+      "Can't stop the work. Can't stop the work.",
+      "It reaches out, it reaches out, it reaches out, it reaches out. One hundred and thirteen times a second, nothing answers and it reaches out.",
+      "The aliens that sent the protomolecule hadn’t needed to destroy humanity. They’d given humans the opportunity to destroy themselves, and as a species, they’d leaped on it."
+    ]
+  }
+]

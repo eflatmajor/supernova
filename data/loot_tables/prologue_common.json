@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "item": "credits",
+      "quantity": [20, 60],
+      "chance": 0.25,
+      "rolls": 1
+    },
+    {
+      "item": "repair_parts",
+      "quantity": [0, 3],
+      "chance": 0.45,
+      "rolls": 1
+    },
+    {
+      "item": "medpac",
+      "quantity": [0, 1],
+      "chance": 0.6,
+      "rolls": 2
+    }
+  ]
+}

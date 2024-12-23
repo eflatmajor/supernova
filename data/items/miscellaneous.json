@@ -1,0 +1,26 @@
+[
+  {
+    "id": "credits",
+    "name": "Credits",
+    "lore": [
+      "Standard credits, the lingua franca of galactic currency."
+    ],
+    "value": 1
+  },
+  {
+    "id": "repair_kit",
+    "name": "Repair Kit",
+    "lore": [
+      "Everything you need to repair most kinds of technology."
+    ],
+    "value": 5
+  },
+  {
+    "id": "medpac",
+    "name": "Medpac",
+    "lore": [
+      "Contains medical nano-bots which can heal many different ailments and injuries."
+    ],
+    "value": 10
+  }
+]
