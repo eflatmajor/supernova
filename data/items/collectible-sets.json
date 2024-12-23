@@ -1,0 +1,20 @@
+[
+  {
+    "id": "mass_effect",
+    "name": "Mass Effect",
+    "description": "Bioware's military science fiction media franchise, created by Casey Hudson.",
+    "rewards": []
+  },
+  {
+    "id": "doctor_who",
+    "name": "Doctor Who",
+    "description": "BBC's science fiction television series, broadcast by since 1963.",
+    "rewards": []
+  },
+  {
+    "id": "the_expanse",
+    "name": "The Expanse",
+    "description": "A science fiction TV series developed for the Syfy network and based on the novel series by James S. A. Corey.",
+    "rewards": []
+  }
+]
