@@ -6,10 +6,6 @@
       <div v-for="[input, output] in output" ref="cmdEntry">
         <Default-Command :input="input" :output="output" />
       </div>
-
-      <!--
-      <Default-Command input="test" :output="['testing', 'command', 'with', 'multiple', 'outputs', 'and also testing things that', 'take up', 'more space than the width', 'of the list item elements']" />
-      -->
     </div>
 
     <div id="command-input">
@@ -20,9 +16,6 @@
 
 <script>
 /*
-  TODO: Make it so that you can press the UP/DOWN arrows to go through your
-        input history, when the command entry area is highlighted.
-  
   TODO: Commands need to return an array of [status, output] - the status will
         be used so that for example if the player does `go north` and that move
         is not possible, then a status of `FAILURE` will be passed into the command component, so that it can then render a red box instead of the default.
@@ -330,7 +323,7 @@ export default {
       inputText: "",
       history: [],
       output: [],
-      historyCurrent: 0
+      historyCurrent: -1
     }
   },
 
@@ -350,9 +343,6 @@ export default {
     scroll() {
       let index = this.$refs.cmdEntry?.length - 1;
       let latestEntry = this.$refs.cmdEntry?.[index];
-
-      // console.log(latestEntry);
-      console.log("scroll", this.$refs.cmdEntry, latestEntry);
 
       if (latestEntry) {
         latestEntry.scrollIntoView();
@@ -387,20 +377,20 @@ export default {
 
     saveToHistory() {
       this.history.push(this.inputText);
+      this.historyCurrent = this.history.length;
     },
 
     processCommand() {
       this.saveToHistory();
       let input = this.inputText.trim().split(" ");
-
-      this.historyCurrent++;
+      
       this.inputText = "";
 
       let [trigger, ...args] = input;
 
-      console.info("Processing command.");
-      console.info("Trigger: ", trigger);
-      console.info("Arguments: ", args);
+      // console.info("Processing command.");
+      // console.info("Trigger: ", trigger);
+      // console.info("Arguments: ", args);
 
       let command = commands.find(cmd => cmd.trigger === trigger);
 
@@ -414,12 +404,7 @@ export default {
 
       let result = command.run(...args);
 
-      // if (Array.isArray(result)) {
-        // this.history.push(...result);
-      // }
-      // else {
-        this.output.push([input.join(" "), result]);
-      // }
+      this.output.push([input.join(" "), result]);
 
       this.$nextTick(() => {
         this.scroll();
