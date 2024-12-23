@@ -15,15 +15,14 @@
 </template>
 
 <script>
-/*
-  TODO: Commands need to return an array of [status, output] - the status will
-        be used so that for example if the player does `go north` and that move
-        is not possible, then a status of `FAILURE` will be passed into the command component, so that it can then render a red box instead of the default.
-  
-  TODO: When using the arrow (up/down) keys to navigate through the command
-        history, the cursor moves around - try to find a way to always keep
-        the cursor at the start OR the end.
-*/
+// TODO: Commands need to return an array of [status, output] - the status will
+//       be used so that for example if the player does `go north` and that move
+//       is not possible, then a status of `FAILURE` will be passed into the command
+//       component, so that it can then render a red box instead of the default.
+
+// TODO: When using the arrow (up/down) keys to navigate through the command
+//       history, the cursor moves around - try to find a way to always keep
+//       the cursor at the start OR the end.
 
 import DefaultCommand from "commands/Default.vue";
 
@@ -33,11 +32,9 @@ import '../interface.css';
 
 /*
   Enumerated types and lookup tables and stuff.
-
-  TODO:
-
-  - Move to a more suitable location.
 */
+
+// TODO: Move to a more suitable location.
 
 const VALID_DIRECTIONS = [
   "N", "E", "S", "W", "NORTH", "EAST", "SOUTH", "WEST"
@@ -75,47 +72,56 @@ const CONTAINER_TYPES = {
 };
 
 /*
-  TODO:
-
-  Move the following game state, perhaps to a `state.js` with a nice and simple
-  `export const state = reactive({});` to begin with and Pinia later?
+  Main game state.
 */
 
-//
-// Main game state
-//
+
+// TODO: Move the following game state, perhaps to a `state.js` with a nice 
+//       and simple `export const state = reactive({});` to begin with and 
+//       Pinia later?
 
 let currentRoom = 1;
 
-//
-// Used by various systems (quests, dialogue etc.) to check if certain things have
-// or have not been done/seen/defeated/whatever.
-//
+/*
+  Global flags.
+
+  Used by various systems (quests, dialogue etc.) to check if certain things have
+  or have not been done/seen/defeated/whatever.
+*/
 
 let globalFlags = {
   NAVI_COMPUTER_LOCKED: true,
   PROLOGUE_DRIVE_REPAIRED: false
 };
 
-//
-// Track various things so we can in future provide a nice cool statistics screen.
-//
+/*
+  Player statistics.
+
+  Track various things so we can in future provide a nice cool statistics screen.
+*/
 
 let statistics = {
   MINUTES_PLAYED: 0
 };
 
 /*
-  TODO:
+  Room data.
 
-  - Add concept of levels (which are a collection of rooms).
-  - Move to rooms being instances of a Room class.
-  - Lore text stuff:
-    - Weighted randomness for lore texts.
-    - Checks system, where certain things are checked before a piece of lore can be chosen:
-      - Able to check against (global) flags (e.g. `FLAGS.TUTORAL_COMPLETED`)
-      - Able to check against character attributes (e.g. `SKILLS.REPAIR > 5`)
+  Contains all the room data for the level.
 */
+
+// TODO: Add concept of levels (which are a collection of rooms).
+
+// TODO: Move to rooms being instances of a Room class?
+
+// TODO: Weighted randomness for lore texts.
+
+// TODO: Checks system, where certain things are checked before a piece of 
+//       lore can be chosen:
+//         - Check (global) flags (e.g. `FLAGS.TUTORAL_COMPLETED`)
+//         - Check character attributes (e.g. `SKILLS.REPAIR > 5`)
+//         - etc.
+
 const rooms = [
   {
     id: 1,
@@ -197,14 +203,15 @@ function getRoomById(id) {
 }
 
 /*
-  TODO:
-
-  - [x] Command aliases
-  - [ ] Store commands in perhaps a CommandManager instance.
-  - [ ] Commands themselves are instances of a Command class.
-  - [ ] Specify a Vue component to render into the command history.
-  - [ ] Optional title that renders as bold before the cmd's output?
+  Command list.
 */
+
+// TODO: Store commands in perhaps a CommandManager instance.
+
+// TODO: Commands themselves are instances of a Command class.
+
+// TODO: Specify a Vue component to render into the command history.
+
 const commands = [
   {
     trigger: "rand",
@@ -213,6 +220,10 @@ const commands = [
       return Math.random();
     }
   },
+
+  /*
+    Tells the player which room they're currently in.
+  */
 
   {
     trigger: "where",
@@ -224,6 +235,10 @@ const commands = [
       return `Your current location is: ${name}.`;
     }
   },
+
+  /*
+    Lists all the connections from the current room to other rooms.
+  */
 
   {
     trigger: "doors",
@@ -247,14 +262,15 @@ const commands = [
   },
 
   /*
-    If no <entity> then describe the current room. Otherwise describe 
-    the <entity>.
+    Describe/explain an entity.
 
-    TODO:
-
-    - How to differentiate if there are e.g. two entities of the same type?
-    - Add support for <entity>.
+    If no entity is specified, then describe the current room.
   */
+
+  // TODO: How to differentiate if there are e.g. two entities of the same type?
+  
+  // TODO: Add support for <entity>.
+
   {
     trigger: "describe",
     aliases: ["explain"],
@@ -274,15 +290,16 @@ const commands = [
     }
   },
 
+  /*
+    Move between rooms.
+  */
+
+  // TODO: Make it so that `move` with no direction specified displays the
+  //       available directions instead of "you can't move in that direction".
+
   {
     trigger: "walk",
     aliases: ["move", "travel", "go"],
-    /*
-      TODO
-
-      - Make it so that `move` with no direction specified displays the
-        available directions instead of "you can't move in that direction"? 
-    */
     run(direction) {
       let prettyDir = prettyDirectionName(direction);
 
@@ -352,6 +369,7 @@ export default {
     /*
       Navigate backwards through the input history.
     */
+
     goBack() {
       this.historyCurrent--;
 
@@ -365,6 +383,7 @@ export default {
     /*
       Navigate forwards through the input history.
     */
+
     goForward() {
       this.historyCurrent++;
 
