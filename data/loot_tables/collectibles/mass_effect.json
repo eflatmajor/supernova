@@ -1,0 +1,10 @@
+{
+  "items": [
+    {
+      "item": "credits",
+      "quantity": [200, 300],
+      "chance": 1,
+      "rolls": 1
+    }
+  ]
+}
