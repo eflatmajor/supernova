@@ -9,11 +9,11 @@
 
       <!--
       <Default-Command input="test" :output="['testing', 'command', 'with', 'multiple', 'outputs', 'and also testing things that', 'take up', 'more space than the width', 'of the list item elements']" />
-    -->
+      -->
     </div>
 
     <div id="command-input">
-      <input type="text" v-model="inputText" @keyup.enter="processCommand" placeholder="Enter Command" />
+      <input type="text" v-model="inputText" @keyup.enter="processCommand" @keyup.up="goBack" @keyup.down="goForward" placeholder="Enter Command" />
     </div>
   </div>
 </template>
@@ -26,6 +26,10 @@
   TODO: Commands need to return an array of [status, output] - the status will
         be used so that for example if the player does `go north` and that move
         is not possible, then a status of `FAILURE` will be passed into the command component, so that it can then render a red box instead of the default.
+  
+  TODO: When using the arrow (up/down) keys to navigate through the command
+        history, the cursor moves around - try to find a way to always keep
+        the cursor at the start OR the end.
 */
 
 import DefaultCommand from "commands/Default.vue";
@@ -304,7 +308,8 @@ export default {
     return {
       inputText: "",
       history: [],
-      output: []
+      output: [],
+      historyCurrent: 0
     }
   },
 
@@ -333,9 +338,42 @@ export default {
       }
     },
 
+    saveToHistory() {
+      this.history.push(this.inputText);
+    },
+
+    /*
+      Navigate backwards through the input history.
+    */
+    goBack() {
+      this.historyCurrent--;
+
+      if (this.historyCurrent < 0) {
+        this.historyCurrent = 0;
+      }
+
+      this.inputText = this.history[this.historyCurrent];
+    },
+
+    /*
+      Navigate forwards through the input history.
+    */
+    goForward() {
+      this.historyCurrent++;
+
+      if (this.historyCurrent > this.history.length - 1) {
+        this.historyCurrent = this.history.length - 1;
+      }
+
+      this.inputText = this.history[this.historyCurrent];
+    },
+
     processCommand() {
-      let input = this.inputText.trim().split(" ");
+      this.saveToHistory();
+      this.historyCurrent++;
       this.inputText = "";
+
+      let input = this.inputText.trim().split(" ");
 
       let [trigger, ...args] = input;
 
