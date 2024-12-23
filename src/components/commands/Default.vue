@@ -67,12 +67,12 @@ div.command-output {
 
 div.command-output ul {
   margin-left: 1em;
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
 }
 
 div.command-output li {
-  width: 25%;
-  margin-bottom: 0.5em;
+  /* width: 25%; */
+  /* margin-bottom: 0.5em; */
 }
 </style>

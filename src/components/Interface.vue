@@ -232,6 +232,27 @@ const commands = [
     }
   },
 
+  {
+    trigger: "doors",
+    aliases: ["doorways"],
+    run() {
+      let room = getRoomById(currentRoom);
+      let connections = room?.connections ?? null;
+
+      if ( ! connections) {
+        return "There are no doors in this room."
+      }
+
+      let directions = Object.entries(connections).map(([direction, roomId]) => {
+        let newRoom = getRoomById(roomId);
+        let newRoomName = newRoom?.name ?? "unknown";
+        return `To the ${direction.toLowerCase()} lies a door to ${newRoomName}.`;
+      });
+
+      return directions;
+    }
+  },
+
   /*
     If no <entity> then describe the current room. Otherwise describe 
     the <entity>.
@@ -370,10 +391,10 @@ export default {
 
     processCommand() {
       this.saveToHistory();
+      let input = this.inputText.trim().split(" ");
+
       this.historyCurrent++;
       this.inputText = "";
-
-      let input = this.inputText.trim().split(" ");
 
       let [trigger, ...args] = input;
 
