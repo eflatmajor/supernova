@@ -359,10 +359,6 @@ export default {
       }
     },
 
-    saveToHistory() {
-      this.history.push(this.inputText);
-    },
-
     /*
       Navigate backwards through the input history.
     */
@@ -387,6 +383,10 @@ export default {
       }
 
       this.inputText = this.history[this.historyCurrent];
+    },
+
+    saveToHistory() {
+      this.history.push(this.inputText);
     },
 
     processCommand() {
@@ -418,9 +418,7 @@ export default {
         // this.history.push(...result);
       // }
       // else {
-        this.history.push(result);
         this.output.push([input.join(" "), result]);
-        console.log("!!!", this.output);
       // }
 
       this.$nextTick(() => {
