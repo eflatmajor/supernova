@@ -1,14 +1,16 @@
 <template>
   <div id="interface">
     <div id="command-output" ref="commandOutput">
-      <div v-if=" ! hasCommandHistory" class="command-entry">
-        <p>No command history!</p>
-      </div>
+      <Default-Command v-if=" ! hasCommandHistory" input="INFO" output="No command history!" />
 
-      <div class="command-entry" v-for="item in history" ref="cmdEntry">
+      <!-- <div class="command-entry" v-for="item in history" ref="cmdEntry">
         <p>{{ item }}</p>
-      </div>
+      </div> -->
 
+      <Default-Command v-for="[input, output] in output" :input="input" :output="output">
+      </Default-Command>
+
+      <!--
       <Default-Command input="move south" output="You moved southwards to Engine Room." />
 
       <Default-Command input="whereami" output="Your current location is: Engine Room." />
@@ -16,6 +18,7 @@
       <Default-Command input="explain" output="Someone seems to have spilt some space-mayonnaise on the pilot's chair." />
 
       <Default-Command input="test" :output="['testing', 'command', 'with', 'multiple', 'outputs', 'and also testing things that', 'take up', 'more space than the width', 'of the list item elements']" />
+    -->
     </div>
 
     <div id="command-input">
@@ -247,7 +250,11 @@ const commands = [
     run(entity) {
       if ( ! entity) {
         let room = getRoomById(currentRoom);
-        let lore = room.lore;
+        let lore = room.lore ?? [];
+
+        if ( ! lore.length) {
+          return "There is nothing to explain.";
+        }
         
         let chosenLore = randomElement(lore);
 
@@ -303,14 +310,15 @@ export default {
   data() {
     return {
       inputText: "",
-      history: []
+      history: [],
+      output: []
     }
   },
 
   mounted() {
-    for (let i = 0; i < 30; i++) {
-      this.history.push(Math.random());
-    }
+    // for (let i = 0; i < 30; i++) {
+    //   this.history.push(Math.random());
+    // }
 
     this.$nextTick(() => {
       this.scroll();
@@ -352,12 +360,14 @@ export default {
 
       let result = command.run(...args);
 
-      if (Array.isArray(result)) {
-        this.history.push(...result);
-      }
-      else {
+      // if (Array.isArray(result)) {
+        // this.history.push(...result);
+      // }
+      // else {
         this.history.push(result);
-      }
+        this.output.push([input.join(" "), result]);
+        console.log("!!!", this.output);
+      // }
 
       this.$nextTick(() => {
         this.scroll();
@@ -399,9 +409,10 @@ div.command-entry {
 input {
   font-family: monospace;
   width: 100vw;
-  padding: 0 8px;
+  padding: 4px 8px;
   margin: 0;
   border: 0;
+  border-top: 2px solid black;
   height: 32px;
   line-height: 32px;
   background-color: var(--purple-1);
