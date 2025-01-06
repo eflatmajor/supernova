@@ -41,11 +41,9 @@ export default {
 <style>
 div.command {
   font-family: monospace;
-  background-color: green;
   font-size: 14px;
   color: white;
   display: flex;
-  /* border: 2px solid black; */
   border-radius: 4px;
   margin: 1em 0;
 }

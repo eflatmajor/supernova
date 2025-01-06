@@ -456,10 +456,6 @@ div#command-output {
   overflow-y: scroll; 
 }
 
-div.command-entry {
-  margin: 0.5em 0;
-}
-
 input {
   font-family: monospace;
   width: 100vw;
