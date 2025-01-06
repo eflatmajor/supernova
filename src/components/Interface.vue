@@ -26,7 +26,7 @@
 
 import DefaultCommand from "commands/Default.vue";
 
-import { randomElement } from "../utilities/array.js";
+import { randomElement } from "utilities/array.js";
 
 import '../interface.css';
 
@@ -467,6 +467,6 @@ input {
   line-height: 32px;
   background-color: var(--purple-1);
   color: white;
-  font-size: 16px;
+  font-size: 14px;
 }
 </style>

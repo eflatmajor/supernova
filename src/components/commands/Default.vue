@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { randomElement } from "../../utilities/array.js";
+import { randomElement } from "utilities/array.js";
 
 const COLOURS = [
   "purple",
@@ -36,12 +36,12 @@ export default {
 
   data() {
     return {
-      cssColour: ""
+      cssColour: "purple"
     };
   },
 
   mounted() {
-    this.cssColour = this.colour ?? randomElement(COLOURS);
+    // this.cssColour = this.colour ?? randomElement(COLOURS);
   },
 
   computed: {

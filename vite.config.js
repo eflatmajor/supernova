@@ -16,6 +16,10 @@ export default defineConfig({
         replacement: resolve(__dirname, './src/components/commands')
       },
       {
+        find: 'utilities',
+        replacement: resolve(__dirname, './src/utilities')
+      },
+      {
         find: 'item',
         replacement: resolve(__dirname, './data/items')
       },
