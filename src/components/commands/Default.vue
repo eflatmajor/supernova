@@ -36,12 +36,12 @@ export default {
 
   data() {
     return {
-      cssColour: "purple"
+      cssColour: ""
     };
   },
 
   mounted() {
-    this.cssColour = randomElement(COLOURS);
+    this.cssColour = this.colour ?? randomElement(COLOURS);
   },
 
   computed: {
