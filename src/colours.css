@@ -1,4 +1,10 @@
+/*
+  https://davidpiesse.github.io/tailwind-md-colours/
+  https://gist.github.com/davidpiesse/74f5eaa23eb405e61b58cfe535d9907c
+*/
+
 :root {
+  /*
   --purple-0: #10002b;
   --purple-1: #240046;
   --purple-2: #3c096c;
@@ -7,4 +13,50 @@
   --purple-5: #9d4edd;
   --purple-6: #c77dff;
   --purple-7: #e0aaff;
+  */
+
+  --purple-0: hsl(272, 100%, 8%);
+  --purple-1: hsl(272, 100%, 14%);
+  --purple-2: hsl(272, 85%, 23%);
+  --purple-3: hsl(272, 73%, 35%);
+  --purple-4: hsl(272, 63%, 46%);
+  --purple-5: hsl(272, 68%, 59%);
+  --purple-6: hsl(272, 100%, 75%);
+  --purple-7: hsl(272, 100%, 83%);
+
+  --red-0: hsl(4, 100%, 8%);
+  --red-1: hsl(4, 100%, 14%);
+  --red-2: hsl(4, 85%, 23%);
+  --red-3: hsl(4, 73%, 35%);
+  --red-4: hsl(4, 63%, 46%);
+  --red-5: hsl(4, 68%, 59%);
+  --red-6: hsl(4, 100%, 75%);
+  --red-7: hsl(4, 100%, 83%);
+
+  --blue-0: hsl(207, 100%, 8%);
+  --blue-1: hsl(207, 100%, 14%);
+  --blue-2: hsl(207, 85%, 23%);
+  --blue-3: hsl(207, 73%, 35%);
+  --blue-4: hsl(207, 63%, 46%);
+  --blue-5: hsl(207, 68%, 59%);
+  --blue-6: hsl(207, 100%, 75%);
+  --blue-7: hsl(207, 100%, 83%);
+
+  --green-0: hsl(122, 100%, 8%);
+  --green-1: hsl(122, 100%, 14%);
+  --green-2: hsl(122, 85%, 23%);
+  --green-3: hsl(122, 73%, 35%);
+  --green-4: hsl(122, 63%, 46%);
+  --green-5: hsl(122, 68%, 59%);
+  --green-6: hsl(122, 100%, 75%);
+  --green-7: hsl(122, 100%, 83%);
+
+  --yellow-0: hsl(54, 100%, 8%);
+  --yellow-1: hsl(54, 100%, 14%);
+  --yellow-2: hsl(54, 85%, 23%);
+  --yellow-3: hsl(54, 73%, 35%);
+  --yellow-4: hsl(54, 63%, 46%);
+  --yellow-5: hsl(54, 68%, 59%);
+  --yellow-6: hsl(54, 100%, 75%);
+  --yellow-7: hsl(54, 100%, 83%);
 }
