@@ -17,7 +17,7 @@
 
 ## UI
 
-It might be cool/useful to allow 8commands to specify a Vue component that is rendered into the command history area, so we could have different kinds of output, to make things
+It might be cool/useful to allow commands to specify a Vue component that is rendered into the command history area, so we could have different kinds of output, to make things
 more visually interesting, or just more usable.
 
 # Item Spawning (Containers)
