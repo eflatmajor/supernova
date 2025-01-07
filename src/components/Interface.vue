@@ -1,5 +1,5 @@
 <template>
-  <div id="interface">
+  <div id="interface" :class="classes">
     <div id="command-output" ref="commandOutput">
       <Default-Command v-if=" ! hasCommandHistory" input="INFO" output="No command history!" />
 
@@ -27,8 +27,19 @@
 import DefaultCommand from "commands/Default.vue";
 
 import { randomElement } from "utilities/array.js";
+import { COLOURS } from "utilities/colours";
 
-import '../interface.css';
+import "../interface.css";
+
+import { mapState } from "pinia";
+import { useGameStore } from "stores/game.js";
+
+/*
+  Must defer.
+
+  https://pinia.vuejs.org/core-concepts/outside-component-usage.html
+*/
+let store;
 
 /*
   Enumerated types and lookup tables and stuff.
@@ -76,8 +87,8 @@ const CONTAINER_TYPES = {
 */
 
 
-// TODO: Move the following game state, perhaps to a `state.js` with a nice 
-//       and simple `export const state = reactive({});` to begin with and 
+// TODO: Move the following game state, perhaps to a `state.js` with a nice
+//       and simple `export const state = reactive({});` to begin with and
 //       Pinia later?
 
 let currentRoom = 1;
@@ -116,7 +127,7 @@ let statistics = {
 
 // TODO: Weighted randomness for lore texts.
 
-// TODO: Checks system, where certain things are checked before a piece of 
+// TODO: Checks system, where certain things are checked before a piece of
 //       lore can be chosen:
 //         - Check (global) flags (e.g. `FLAGS.TUTORAL_COMPLETED`)
 //         - Check character attributes (e.g. `SKILLS.REPAIR > 5`)
@@ -214,6 +225,26 @@ function getRoomById(id) {
 
 const commands = [
   {
+    trigger: "theme",
+    aliases: ["color", "colour", "scheme"],
+    run(colour) {
+      colour = colour ?? "";
+
+      if (colour === "") {
+        return `Current colour scheme: ${store.colourScheme}.`;
+      }
+
+      if ( ! COLOURS.includes(colour)) {
+        return `Valid colour schemes: ${COLOURS.join(", ")}`;
+      }
+
+      store.colourScheme = colour;
+
+      return `Successfully set the colour scheme to ${colour}.`;
+    }
+  },
+
+  {
     trigger: "rand",
     aliases: ["random"],
     run() {
@@ -268,7 +299,7 @@ const commands = [
   */
 
   // TODO: How to differentiate if there are e.g. two entities of the same type?
-  
+
   // TODO: Add support for <entity>.
 
   {
@@ -282,7 +313,7 @@ const commands = [
         if ( ! lore.length) {
           return "There is nothing to explain.";
         }
-        
+
         let chosenLore = randomElement(lore);
 
         return chosenLore.text;
@@ -324,7 +355,7 @@ const commands = [
 
         return `You moved ${prettyDir}wards to ${newRoom.name}.`;
       }
-      
+
       return 'You cannot move in that direction!';
     }
   }
@@ -342,6 +373,10 @@ export default {
       output: [],
       historyCurrent: -1
     }
+  },
+
+  beforeCreate() {
+    store = useGameStore();
   },
 
   mounted() {
@@ -402,7 +437,7 @@ export default {
     processCommand() {
       this.saveToHistory();
       let input = this.inputText.trim().split(" ");
-      
+
       this.inputText = "";
 
       let [trigger, ...args] = input;
@@ -423,7 +458,8 @@ export default {
 
       let result = command.run(...args);
 
-      this.output.push([input.join(" "), result]);
+      // this.output.push([input.join(" "), result]);
+      this.output.push([trigger, result]);
 
       this.$nextTick(() => {
         this.scroll();
@@ -432,11 +468,17 @@ export default {
   },
 
   computed: {
+    ...mapState(useGameStore, ["colourScheme"]),
+
     hasCommandHistory() {
       return this.output.length > 0;
+    },
+
+    classes() {
+      return [this.colourScheme];
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -450,10 +492,10 @@ div#interface {
 
 div#command-output {
   flex: 1;
-  background-color: var(--purple-3);
+  /* background-color: var(--purple-3); */
   height: calc(100vh - 32px);
   padding: 1em 1em 0 1em;
-  overflow-y: scroll; 
+  overflow-y: scroll;
 }
 
 input {
@@ -465,8 +507,58 @@ input {
   border-top: 2px solid black;
   height: 32px;
   line-height: 32px;
-  background-color: var(--purple-1);
+  /* background-color: var(--purple-1); */
   color: white;
   font-size: 14px;
+}
+
+.purple {
+  div#command-output {
+    background-color: var(--purple-3);
+  }
+
+  input {
+    background-color: var(--purple-1);
+  }
+}
+
+.red {
+  div#command-output {
+    background-color: var(--red-3);
+  }
+
+  input {
+    background-color: var(--red-1);
+  }
+}
+
+.blue {
+  div#command-output {
+    background-color: var(--blue-3);
+  }
+
+  input {
+    background-color: var(--blue-1);
+  }
+}
+
+.green {
+  div#command-output {
+    background-color: var(--green-3);
+  }
+
+  input {
+    background-color: var(--green-1);
+  }
+}
+
+.yellow {
+  div#command-output {
+    background-color: var(--yellow-3);
+  }
+
+  input {
+    background-color: var(--yellow-1);
+  }
 }
 </style>

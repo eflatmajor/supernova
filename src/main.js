@@ -1,11 +1,16 @@
-import { createApp } from 'vue'
-// import './style.css'
-import './colours.css'
-import App from './App.vue'
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+// import p5 from 'p5';
 
-import p5 from 'p5';
+import App from './App.vue';
 
-createApp(App).mount('#app')
+import './colours.css';
+
+const pinia = createPinia();
+const app = createApp(App);
+
+app.use(pinia);
+app.mount('#app');
 
 /*
 function setupP5() {
@@ -26,3 +31,4 @@ function setupP5() {
   }, document.getElementById('canvas-container'));
 }
 */
+ 

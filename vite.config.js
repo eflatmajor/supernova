@@ -1,7 +1,6 @@
-// import { fileURLToPath } from 'node:url'
-import { resolve } from 'node:path'
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { resolve } from "node:path";
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
 
 export default defineConfig({
   plugins: [vue()],
@@ -12,6 +11,14 @@ export default defineConfig({
         replacement: resolve(__dirname, './src')
       },
       {
+        find: 'stores',
+        replacement: resolve(__dirname, './src/stores')
+      },
+      {
+        find: 'components',
+        replacement: resolve(__dirname, './src/components')
+      },
+      {
         find: 'commands',
         replacement: resolve(__dirname, './src/components/commands')
       },
@@ -20,13 +27,13 @@ export default defineConfig({
         replacement: resolve(__dirname, './src/utilities')
       },
       {
-        find: 'item',
+        find: 'items',
         replacement: resolve(__dirname, './data/items')
       },
       {
-        find: 'loot',
+        find: 'loot_tables',
         replacement: resolve(__dirname, './data/loot_tables')
       },
     ]
   }
-})
+});

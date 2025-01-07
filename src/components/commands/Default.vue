@@ -1,5 +1,5 @@
 <template>
-  <div :class="cssClass">
+  <div class="command">
     <div class="command-input">
       {{ input }}
     </div>
@@ -22,33 +22,12 @@
 
 <script>
 import { randomElement } from "utilities/array.js";
-
-const COLOURS = [
-  "purple",
-  "red",
-  "blue",
-  "green",
-  "yellow"
-];
+import { COLOURS } from "utilities/colours";
 
 export default {
   props: ["input", "output", "colour"],
 
-  data() {
-    return {
-      cssColour: "purple"
-    };
-  },
-
-  mounted() {
-    // this.cssColour = this.colour ?? randomElement(COLOURS);
-  },
-
   computed: {
-    cssClass() {
-      return ["command", this.cssColour];
-    },
-
     multipleOutputs() {
       return Array.isArray(this.output);
     }
@@ -68,7 +47,7 @@ div.command {
 
 .purple {
   div.command-input {
-    background-color: var(--purple-1);  
+    background-color: var(--purple-1);
   }
   div.command-output {
     background-color: var(--purple-2);
@@ -77,7 +56,7 @@ div.command {
 
 .red {
   div.command-input {
-    background-color: var(--red-1);  
+    background-color: var(--red-1);
   }
   div.command-output {
     background-color: var(--red-2);
@@ -86,7 +65,7 @@ div.command {
 
 .blue {
   div.command-input {
-    background-color: var(--blue-1);  
+    background-color: var(--blue-1);
   }
   div.command-output {
     background-color: var(--blue-2);
@@ -95,7 +74,7 @@ div.command {
 
 .green {
   div.command-input {
-    background-color: var(--green-1);  
+    background-color: var(--green-1);
   }
   div.command-output {
     background-color: var(--green-2);
@@ -104,7 +83,7 @@ div.command {
 
 .yellow {
   div.command-input {
-    background-color: var(--yellow-1);  
+    background-color: var(--yellow-1);
   }
   div.command-output {
     background-color: var(--yellow-2);
