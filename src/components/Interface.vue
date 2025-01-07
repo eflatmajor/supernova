@@ -28,18 +28,14 @@ import DefaultCommand from "commands/Default.vue";
 
 import { randomElement } from "utilities/array.js";
 import { COLOURS } from "utilities/colours";
+import pinia from "@/pinia.js";
 
 import "../interface.css";
 
 import { mapState } from "pinia";
 import { useGameStore } from "stores/game.js";
 
-/*
-  Must defer.
-
-  https://pinia.vuejs.org/core-concepts/outside-component-usage.html
-*/
-let store;
+let store = useGameStore(pinia);
 
 /*
   Enumerated types and lookup tables and stuff.
@@ -373,10 +369,6 @@ export default {
       output: [],
       historyCurrent: -1
     }
-  },
-
-  beforeCreate() {
-    store = useGameStore();
   },
 
   mounted() {
