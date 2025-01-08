@@ -41,7 +41,7 @@ div.command {
   color: white;
   display: flex;
   border-radius: 4px;
-  margin: 1em 0;
+  margin-bottom: 1em;
 }
 
 .purple {
