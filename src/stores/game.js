@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { FLAGS } from "game/flags.js";
-import { STATISTICS } from "../game/statistics";
+import { STATISTICS } from "game/statistics.js";
 
 export const useGameStore = defineStore('game', {
   state() {
