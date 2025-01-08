@@ -6,6 +6,6 @@
 */
 
 export const FLAGS = {
-  NAVI_COMPUTER_LOCKED: "naviComputedLocked",
+  NAVI_COMPUTER_LOCKED: "naviComputerLocked",
   PROLOGUE_DRIVE_REPAIRED: "prologueDriveRepaired"
 };
