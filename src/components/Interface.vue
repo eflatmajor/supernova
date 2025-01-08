@@ -32,9 +32,10 @@ import { useGameStore } from "stores/game.js";
 let store; /* Must defer! */
 
 import { setStore } from "game/store.js";
-import { globalFlags } from "game/flags.js";
-import { statistics } from "game/statistics.js";
+// import { FLAGS } from "game/flags.js";
+// import { STATISTICS } from "game/statistics.js";
 import { commands } from "game/commands.js";
+import { getRoomById, onRoomChange } from "game/rooms.js";
 
 import "../interface.css";
 
@@ -55,14 +56,34 @@ export default {
   beforeCreate() {
     store = useGameStore();
     setStore(store);
+
+    store.$subscribe((mutation, state) => {
+      let { type, key, newValue } = mutation.events;
+
+      if (type !== "set" || key !== "currentRoom") {
+        return;
+      }
+
+      let room = getRoomById(newValue);
+
+      this.output.push([
+        `Current Room: ${room.name}`, room.description
+      ]);
+    });
   },
 
   mounted() {
+    let room = getRoomById(store.currentRoom);
+
     for (let i = 0; i < 30; i++) {
       this.output.push([
         "rand", Math.random()
       ]);
     }
+
+    this.output.push([
+      `Current Room: ${room.name}`, room.description
+    ]);
 
     this.$nextTick(() => {
       this.scroll();

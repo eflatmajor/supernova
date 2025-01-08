@@ -1,3 +1,5 @@
+import { getStore } from "./store.js";
+
 const CONTAINER_TYPES = {
   LOCKER:     1,
   FOOTLOCKER: 2,
@@ -28,6 +30,7 @@ const rooms = [
   {
     id: 1,
     name: "Cockpit",
+    description: "Cockpit description.",
     connections: {
       EAST:  2, // Communications
       SOUTH: 4  // Engine Room
@@ -68,6 +71,7 @@ const rooms = [
   {
     id: 2,
     name: "Communications",
+    description: "Communications description.",
     connections: {
       WEST:  1, // Cockpit
       SOUTH: 3  // Medical Bay
@@ -79,6 +83,7 @@ const rooms = [
   {
     id: 3,
     name: "Medical Bay",
+    description: "Medical Bay description.",
     connections: {
       NORTH: 2, // Communications
       WEST:  4  // Engine Room
@@ -90,6 +95,7 @@ const rooms = [
   {
     id: 4,
     name: "Engine Room",
+    description: "Engine Room description.",
     connections: {
       NORTH: 1, // Cockpit
       EAST:  3, // Medical Bay
@@ -104,4 +110,13 @@ function getRoomById(id) {
   return rooms.find(room => room.id === id);
 }
 
-export { rooms, getRoomById };
+function onRoomChange(prevRoom) {
+  let store = getStore();
+  let room = getRoomById(store.currentRoom);
+
+  console.debug("onRoomChange");
+  console.debug("prevRoom", prevRoom);
+  console.debug("currRoom", store.currentRoom);
+}
+
+export { rooms, getRoomById, onRoomChange };

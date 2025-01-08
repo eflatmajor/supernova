@@ -2,7 +2,7 @@ import { randomElement } from "utilities/array.js";
 import { COLOURS } from "utilities/colours";
 import { prettyDirectionName, VALID_DIRECTIONS } from "utilities/directions.js";
 
-import { getRoomById } from "./rooms.js";
+import { getRoomById, onRoomChange } from "./rooms.js";
 import { getStore } from "./store.js";
 
 /*
@@ -155,7 +155,9 @@ export const commands = [
       if (connection) {
         console.info(`Setting currentRoom to ${connection}.`);
 
+        let prevRoom = store.currentRoom;
         store.currentRoom = connection;
+        onRoomChange(prevRoom, connection);
         let newRoom = getRoomById(store.currentRoom);
 
         return `You moved ${prettyDir}wards to ${newRoom.name}.`;
