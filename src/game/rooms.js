@@ -99,7 +99,25 @@ const rooms = [
       EAST:  3, // Medical Bay
     },
     lore: [
-
+      {
+        text: "You think you could improve hyper-drive efficiency slightly if you trained more in Repair.",
+        checks: {
+          attributes: [
+            ["REPAIR", ["<", 5]]
+          ]
+        }
+      },
+      {
+        text: "Due to your skill in Repair you are able to upgrade the hyper-drive's efficiency.",
+        checks: {
+          attributes: [
+            ["REPAIR", [">=", 5]]
+          ],
+          flags: [
+            ["HYPERDRIVE_UPGRADED", "false"]
+          ]
+        }
+      },
     ]
   }
 ];

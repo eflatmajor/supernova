@@ -1,7 +1,7 @@
 <template>
   <div id="interface" :class="classes">
     <div id="command-output" ref="commandOutput">
-      <Default-Command v-if=" ! hasCommandHistory" input="INFO" output="No command history!" />
+      <Default-Command v-if=" ! hasCommandHistory" input="Information" output="No command history!" />
 
       <div v-for="[input, output] in output" ref="cmdEntry">
         <Default-Command :input="input" :output="output" />
