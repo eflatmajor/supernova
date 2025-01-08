@@ -3,7 +3,7 @@ let store;
 /*
   Must be called at some point with the store instance returned from `useGameStore()`.
 
-  Currently this is called from `beforeCreate` in `src/components/Interface.vue`.
+  Currently this is called from `beforeCreate()` in `src/components/Interface.vue`.
 
   See: https://pinia.vuejs.org/core-concepts/outside-component-usage.html
 */
