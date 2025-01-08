@@ -90,35 +90,6 @@ import { rooms, getRoomById } from "@/game/rooms.js";
 
 const commands_ = [
   /*
-    Describe/explain an entity.
-
-    If no entity is specified, then describe the current room.
-  */
-
-  // TODO: How to differentiate if there are e.g. two entities of the same type?
-
-  // TODO: Add support for <entity>.
-
-  {
-    trigger: "describe",
-    aliases: ["explain"],
-    run(entity) {
-      if ( ! entity) {
-        let room = getRoomById(currentRoom);
-        let lore = room.lore ?? [];
-
-        if ( ! lore.length) {
-          return "There is nothing to explain.";
-        }
-
-        let chosenLore = randomElement(lore);
-
-        return chosenLore.text;
-      }
-    }
-  },
-
-  /*
     Move between rooms.
   */
 

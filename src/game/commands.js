@@ -1,4 +1,4 @@
-// import { randomElement } from "utilities/array.js";
+import { randomElement } from "utilities/array.js";
 import { COLOURS } from "utilities/colours";
 
 import { getRoomById } from "./rooms.js";
@@ -82,6 +82,37 @@ export const commands = [
       });
 
       return directions;
+    }
+  },
+
+  /*
+    Describe/explain an entity.
+
+    If no entity is specified, then describe the current room.
+  */
+
+  // TODO: How to differentiate if there are e.g. two entities of the same type?
+
+  // TODO: Add support for <entity>.
+
+  {
+    trigger: "describe",
+    aliases: ["explain"],
+    run(entity) {
+      let store = getStore();
+
+      if ( ! entity) {
+        let room = getRoomById(store.currentRoom);
+        let lore = room.lore ?? [];
+
+        if ( ! lore.length) {
+          return "There is nothing to explain.";
+        }
+
+        let chosenLore = randomElement(lore);
+
+        return chosenLore.text;
+      }
     }
   },
 ];
