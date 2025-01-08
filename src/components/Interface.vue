@@ -33,51 +33,12 @@ import "../interface.css";
 
 import { mapState } from "pinia";
 import { useGameStore } from "stores/game.js";
-import { setStore } from "@/game/store.js";
 
 let store; /* Must defer! */
 
-/*
-  Enumerated types and lookup tables and stuff.
-*/
-
-import { VALID_DIRECTIONS, prettyDirectionName } from "utilities/directions.js";
-
-/*
-  Main game state.
-*/
-
-
-// TODO: Move the following game state, perhaps to a `state.js` with a nice
-//       and simple `export const state = reactive({});` to begin with and
-//       Pinia later?
-
-let currentRoom = 1;
-
-/*
-  Global flags.
-
-  Used by various systems (quests, dialogue etc.) to check if certain things have
-  or have not been done/seen/defeated/whatever.
-*/
-
-let globalFlags = {
-  NAVI_COMPUTER_LOCKED: true,
-  PROLOGUE_DRIVE_REPAIRED: false
-};
-
-/*
-  Player statistics.
-
-  Track various things so we can in future provide a nice cool statistics screen.
-*/
-
-let statistics = {
-  MINUTES_PLAYED: 0
-};
-
-import { rooms, getRoomById } from "@/game/rooms.js";
-
+import { setStore } from "@/game/store.js";
+import { globalFlags } from "@/game/flags.js";
+import { statistics } from "@/game/statistics.js";
 import { commands } from "@/game/commands.js";
 
 export default {
