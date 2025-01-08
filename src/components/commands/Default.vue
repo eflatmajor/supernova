@@ -1,7 +1,9 @@
 <template>
   <div class="command">
     <div class="command-input">
-      {{ input }}
+      <div class="command-input-inner">
+        {{ input }}
+      </div>
     </div>
 
     <div class="command-output">
@@ -93,6 +95,13 @@ div.command-input {
   border-radius: 4px 0 0 4px;
   border-right: 2px solid black;
   min-width: fit-content;
+  /* align-self: center; */
+}
+
+div.command-input-inner {
+  display: flex;
+  height: 100%;
+  align-items: center;
 }
 
 div.command-output {
