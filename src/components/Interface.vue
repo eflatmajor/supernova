@@ -28,14 +28,14 @@ import DefaultCommand from "commands/Default.vue";
 
 import { randomElement } from "utilities/array.js";
 import { COLOURS } from "utilities/colours";
-import pinia from "@/pinia.js";
 
 import "../interface.css";
 
 import { mapState } from "pinia";
 import { useGameStore } from "stores/game.js";
+import { setStore } from "@/game/store.js";
 
-let store = useGameStore(pinia);
+let store; /* Must defer! */
 
 /*
   Enumerated types and lookup tables and stuff.
@@ -219,7 +219,7 @@ function getRoomById(id) {
 
 // TODO: Specify a Vue component to render into the command history.
 
-const commands = [
+const commands_ = [
   {
     trigger: "theme",
     aliases: ["color", "colour", "scheme"],
@@ -357,6 +357,8 @@ const commands = [
   }
 ];
 
+import { commands } from "@/game/commands.js";
+
 export default {
   components: {
     DefaultCommand
@@ -369,6 +371,11 @@ export default {
       output: [],
       historyCurrent: -1
     }
+  },
+
+  beforeCreate() {
+    store = useGameStore();
+    setStore(store);
   },
 
   mounted() {

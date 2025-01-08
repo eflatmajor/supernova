@@ -8,7 +8,6 @@ import pinia from "@/pinia.js";
 import './colours.css';
 
 const app = createApp(App);
-
 app.use(pinia);
 app.mount('#app');
 
