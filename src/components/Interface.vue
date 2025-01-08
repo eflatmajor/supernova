@@ -78,57 +78,6 @@ let statistics = {
 
 import { rooms, getRoomById } from "@/game/rooms.js";
 
-/*
-  Command list.
-*/
-
-// TODO: Store commands in perhaps a CommandManager instance.
-
-// TODO: Commands themselves are instances of a Command class.
-
-// TODO: Specify a Vue component to render into the command history.
-
-const commands_ = [
-  /*
-    Move between rooms.
-  */
-
-  // TODO: Make it so that `move` with no direction specified displays the
-  //       available directions instead of "you can't move in that direction".
-
-  {
-    trigger: "walk",
-    aliases: ["move", "travel", "go"],
-    run(direction) {
-      let prettyDir = prettyDirectionName(direction);
-
-      if ( ! VALID_DIRECTIONS.includes(direction?.toUpperCase())) {
-        return 'You cannot move in that direction!';
-      }
-
-      let room = getRoomById(currentRoom);
-
-      if ( ! room) {
-        throw new Error(`Unable to find current room (ID: ${currentRoom})!`);
-      }
-
-      let connections = room.connections;
-      let connection = connections[prettyDir.toUpperCase()];
-
-      if (connection) {
-        console.info(`Setting currentRoom to ${connection}.`);
-
-        currentRoom = connection;
-        let newRoom = getRoomById(currentRoom);
-
-        return `You moved ${prettyDir}wards to ${newRoom.name}.`;
-      }
-
-      return 'You cannot move in that direction!';
-    }
-  }
-];
-
 import { commands } from "@/game/commands.js";
 
 export default {

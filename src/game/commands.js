@@ -1,8 +1,15 @@
 import { randomElement } from "utilities/array.js";
 import { COLOURS } from "utilities/colours";
+import { prettyDirectionName, VALID_DIRECTIONS } from "utilities/directions.js";
 
 import { getRoomById } from "./rooms.js";
 import { getStore } from "./store.js";
+
+/*
+  Command list.
+*/
+
+// TODO: Specify a Vue component to render into the command history.
 
 export const commands = [
 
@@ -115,4 +122,46 @@ export const commands = [
       }
     }
   },
+
+  /*
+    Move between rooms.
+  */
+
+  // TODO: Make it so that `move` with no direction specified displays the
+  //       available directions instead of "you can't move in that direction".
+
+  {
+    trigger: "walk",
+    aliases: ["move", "travel", "go"],
+    run(direction) {
+      let prettyDir = prettyDirectionName(direction);
+
+      if ( ! VALID_DIRECTIONS.includes(direction?.toUpperCase())) {
+        return 'You cannot move in that direction!';
+      }
+
+      let store = getStore();
+      let currentRoom = store.currentRoom;
+
+      let room = getRoomById(currentRoom);
+
+      if ( ! room) {
+        throw new Error(`Unable to find current room (ID: ${currentRoom})!`);
+      }
+
+      let connections = room.connections;
+      let connection = connections[prettyDir.toUpperCase()];
+
+      if (connection) {
+        console.info(`Setting currentRoom to ${connection}.`);
+
+        store.currentRoom = connection;
+        let newRoom = getRoomById(store.currentRoom);
+
+        return `You moved ${prettyDir}wards to ${newRoom.name}.`;
+      }
+
+      return 'You cannot move in that direction!';
+    }
+  }
 ];
