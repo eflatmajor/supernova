@@ -41,33 +41,7 @@ let store; /* Must defer! */
   Enumerated types and lookup tables and stuff.
 */
 
-// TODO: Move to a more suitable location.
-
-const VALID_DIRECTIONS = [
-  "N", "E", "S", "W", "NORTH", "EAST", "SOUTH", "WEST"
-];
-
-function prettyDirectionName(direction = "") {
-  let upperDir = direction.toUpperCase();
-
-  switch (upperDir) {
-    case "N":
-      return "north";
-      break;
-    case "E":
-      return "east";
-      break;
-    case "S":
-      return "south";
-      break;
-    case "W":
-      return "west";
-      break;
-    default:
-      return direction.toLowerCase();
-      break;
-  }
-}
+import { VALID_DIRECTIONS, prettyDirectionName } from "utilities/directions.js";
 
 /*
   Main game state.
@@ -115,21 +89,6 @@ import { rooms, getRoomById } from "@/game/rooms.js";
 // TODO: Specify a Vue component to render into the command history.
 
 const commands_ = [
-  /*
-    Tells the player which room they're currently in.
-  */
-
-  {
-    trigger: "where",
-    aliases: ["whereami"],
-    run() {
-      let room = getRoomById(currentRoom);
-      let name = room?.name ?? "unknown";
-
-      return `Your current location is: ${name}.`;
-    }
-  },
-
   /*
     Lists all the connections from the current room to other rooms.
   */
