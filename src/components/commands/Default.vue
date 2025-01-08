@@ -92,6 +92,7 @@ div.command-input {
   font-weight: bold;
   border-radius: 4px 0 0 4px;
   border-right: 2px solid black;
+  min-width: fit-content;
 }
 
 div.command-output {
