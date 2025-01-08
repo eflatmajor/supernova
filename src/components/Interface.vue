@@ -24,17 +24,17 @@
 //       history, the cursor moves around - try to find a way to always keep
 //       the cursor at the start OR the end.
 
-import DefaultCommand from "commands/Default.vue";
+import DefaultCommand from "components/commands/Default.vue";
 
 import { mapState } from "pinia";
 import { useGameStore } from "stores/game.js";
 
 let store; /* Must defer! */
 
-import { setStore } from "@/game/store.js";
-import { globalFlags } from "@/game/flags.js";
-import { statistics } from "@/game/statistics.js";
-import { commands } from "@/game/commands.js";
+import { setStore } from "game/store.js";
+import { globalFlags } from "game/flags.js";
+import { statistics } from "game/statistics.js";
+import { commands } from "game/commands.js";
 
 import "../interface.css";
 
