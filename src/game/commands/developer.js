@@ -1,5 +1,6 @@
 import { useGameStore } from "stores/game.js";
 import { FLAGS } from "game/flags.js";
+import { parseArgument } from "utilities/arguments.js";
 
 /*
   Developer commands.
@@ -55,23 +56,11 @@ export const commands = [
         }
 
         if ( ! flags.includes(flag)) {
-          return "You passed an unknown flag."
+          return `You passed an unknown flag. Known flags: ${flags.join(", ")}.`;
         }
 
-        let actualValue;
-        switch (value) {
-          case "true":
-            actualValue = true;
-            break;
-          case "false":
-            actualValue = false;
-            break;
-          default:
-            actualValue = value;
-            break;
-        }
-
-        store.flags[flag] = actualValue;
+        value = parseArgument(value);
+        store.flags[flag] = value;
 
         return `Updated value of flag "${flag}" to "${value}".`;
       }
