@@ -28,7 +28,7 @@ const rooms = [
   {
     id: 1,
     name: "Cockpit",
-    description: "Cockpit description.",
+    description: "Flickering holographic displays cast an eerie blue glow across the cramped cockpit, illuminating worn control panels studded with glowing buttons and switches. Outside the viewport, the swirling nebula stretches into infinity.",
     connections: {
       EAST:  2, // Communications
       SOUTH: 4  // Engine Room
@@ -69,7 +69,7 @@ const rooms = [
   {
     id: 2,
     name: "Communications",
-    description: "Communications description.",
+    description: "A web of glowing fiber-optic cables snake across the walls of the comms room, converging on a central console where a tense officer is monitoring a bank of static-laced screens. Urgent messages flashed across the displays, warnings of encroaching enemy vessels and desperate pleas for reinforcements.",
     connections: {
       WEST:  1, // Cockpit
       SOUTH: 3  // Medical Bay
@@ -81,7 +81,7 @@ const rooms = [
   {
     id: 3,
     name: "Medical Bay",
-    description: "Medical Bay description.",
+    description: "The sterile white medical bay hums with the low thrum of diagnostic equipment, its walls lined with glowing bio-monitors displaying vital signs in crisp green text.",
     connections: {
       NORTH: 2, // Communications
       WEST:  4  // Engine Room
@@ -93,7 +93,7 @@ const rooms = [
   {
     id: 4,
     name: "Engine Room",
-    description: "Engine Room description.",
+    description: "The engine room roars with barely-contained power, a cathedral of gleaming metal and sparking conduits where colossal engines pulse with blinding energy.",
     connections: {
       NORTH: 1, // Cockpit
       EAST:  3, // Medical Bay
