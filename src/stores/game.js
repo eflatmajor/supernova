@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { FLAGS } from "game/flags.js";
+import { STATISTICS } from "../game/statistics";
 
 export const useGameStore = defineStore('game', {
   state() {
@@ -10,6 +11,9 @@ export const useGameStore = defineStore('game', {
         [FLAGS.NAVI_COMPUTER_LOCKED]: true,
         [FLAGS.PROLOGUE_DRIVE_REPAIRED]: false
 
+      },
+      statistics: {
+        [STATISTICS.MINUTES_PLAYED]: 0
       }
     };
   },
