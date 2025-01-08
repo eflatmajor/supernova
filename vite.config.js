@@ -23,8 +23,8 @@ export default defineConfig({
         replacement: resolve(__dirname, './src/components')
       },
       {
-        find: 'components',
-        replacement: resolve(__dirname, './src/components')
+        find: 'commands',
+        replacement: resolve(__dirname, './src/game/commands')
       },
       {
         find: 'utilities',

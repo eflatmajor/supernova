@@ -2,28 +2,16 @@ import { randomElement } from "utilities/array.js";
 import { COLOURS } from "utilities/colours";
 import { prettyDirectionName, VALID_DIRECTIONS } from "utilities/directions.js";
 
-import { getRoomById } from "./rooms.js";
+import { getRoomById } from "game/rooms.js";
 import { useGameStore } from "stores/game.js";
 
 /*
-  Command list.
+  Main game commands.
 */
 
 // TODO: Specify a Vue component to render into the command history.
 
 export const commands = [
-
-  /*
-    Testing command for testing purposes.
-  */
-
-  {
-    trigger: "rand",
-    aliases: ["random"],
-    run() {
-      return Math.random();
-    }
-  },
 
   /*
     Allows the player to choose a colour scheme.

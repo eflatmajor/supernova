@@ -33,7 +33,11 @@ let store; /* Must defer! */
 
 // import { FLAGS } from "game/flags.js";
 // import { STATISTICS } from "game/statistics.js";
-import { commands } from "game/commands.js";
+import { commands as commandsMain } from "commands/main.js";
+import { commands as commandsDevel } from "commands/developer.js";
+
+const commands = [...commandsMain, ...commandsDevel];
+
 import { getRoomById } from "game/rooms.js";
 
 import "../interface.css";
