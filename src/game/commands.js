@@ -51,6 +51,22 @@ export const commands = [
   },
 
   /*
+    Shows the room's description.
+  */
+
+  {
+    trigger: "description",
+    aliases: ["desc"],
+    run() {
+      let store = getStore();
+      let room = getRoomById(store.currentRoom);
+      let desc = room?.description ?? "No description available.";
+
+      return desc;
+    }
+  },
+
+  /*
     Tells the player which room they're currently in.
   */
 
@@ -155,9 +171,9 @@ export const commands = [
       if (connection) {
         console.info(`Setting currentRoom to ${connection}.`);
 
-        let prevRoom = store.currentRoom;
+        // let prevRoom = store.currentRoom;
         store.currentRoom = connection;
-        onRoomChange(prevRoom, connection);
+        // onRoomChange(prevRoom, connection);
         let newRoom = getRoomById(store.currentRoom);
 
         return `You moved ${prettyDir}wards to ${newRoom.name}.`;
