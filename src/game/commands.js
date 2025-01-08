@@ -2,8 +2,8 @@ import { randomElement } from "utilities/array.js";
 import { COLOURS } from "utilities/colours";
 import { prettyDirectionName, VALID_DIRECTIONS } from "utilities/directions.js";
 
-import { getRoomById, onRoomChange } from "./rooms.js";
-import { getStore } from "./store.js";
+import { getRoomById } from "./rooms.js";
+import { useGameStore } from "stores/game.js";
 
 /*
   Command list.
@@ -33,7 +33,7 @@ export const commands = [
     trigger: "theme",
     aliases: ["color", "colour", "scheme"],
     run(colour) {
-      let store = getStore();
+      let store = useGameStore();
       colour = colour ?? "";
 
       if (colour === "") {
@@ -58,7 +58,7 @@ export const commands = [
     trigger: "description",
     aliases: ["desc"],
     run() {
-      let store = getStore();
+      let store = useGameStore();
       let room = getRoomById(store.currentRoom);
       let desc = room?.description ?? "No description available.";
 
@@ -74,7 +74,7 @@ export const commands = [
     trigger: "where",
     aliases: ["whereami"],
     run() {
-      let store = getStore();
+      let store = useGameStore();
       let room = getRoomById(store.currentRoom);
       let name = room?.name ?? "unknown";
 
@@ -90,7 +90,7 @@ export const commands = [
     trigger: "doors",
     aliases: ["doorways"],
     run() {
-      let store = getStore();
+      let store = useGameStore();
       let room = getRoomById(store.currentRoom);
       let connections = room?.connections ?? null;
 
@@ -122,7 +122,7 @@ export const commands = [
     trigger: "describe",
     aliases: ["explain"],
     run(entity) {
-      let store = getStore();
+      let store = useGameStore();
 
       if ( ! entity) {
         let room = getRoomById(store.currentRoom);
@@ -156,7 +156,7 @@ export const commands = [
         return 'You cannot move in that direction!';
       }
 
-      let store = getStore();
+      let store = useGameStore();
       let currentRoom = store.currentRoom;
 
       let room = getRoomById(currentRoom);
@@ -171,9 +171,7 @@ export const commands = [
       if (connection) {
         console.info(`Setting currentRoom to ${connection}.`);
 
-        // let prevRoom = store.currentRoom;
         store.currentRoom = connection;
-        // onRoomChange(prevRoom, connection);
         let newRoom = getRoomById(store.currentRoom);
 
         return `You moved ${prettyDir}wards to ${newRoom.name}.`;

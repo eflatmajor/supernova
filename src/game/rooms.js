@@ -1,5 +1,3 @@
-import { getStore } from "./store.js";
-
 const CONTAINER_TYPES = {
   LOCKER:     1,
   FOOTLOCKER: 2,
@@ -110,13 +108,4 @@ function getRoomById(id) {
   return rooms.find(room => room.id === id);
 }
 
-function onRoomChange(prevRoom) {
-  let store = getStore();
-  let room = getRoomById(store.currentRoom);
-
-  console.debug("onRoomChange");
-  console.debug("prevRoom", prevRoom);
-  console.debug("currRoom", store.currentRoom);
-}
-
-export { rooms, getRoomById, onRoomChange };
+export { rooms, getRoomById };

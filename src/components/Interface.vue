@@ -31,11 +31,10 @@ import { useGameStore } from "stores/game.js";
 
 let store; /* Must defer! */
 
-import { setStore } from "game/store.js";
 // import { FLAGS } from "game/flags.js";
 // import { STATISTICS } from "game/statistics.js";
 import { commands } from "game/commands.js";
-import { getRoomById, onRoomChange } from "game/rooms.js";
+import { getRoomById } from "game/rooms.js";
 
 import "../interface.css";
 
@@ -55,7 +54,6 @@ export default {
 
   beforeCreate() {
     store = useGameStore();
-    setStore(store);
 
     store.$subscribe((mutation, state) => {
       let { type, key, newValue } = mutation.events;
