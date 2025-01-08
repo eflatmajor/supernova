@@ -72,7 +72,7 @@ export const commands = [
 
   {
     trigger: "where",
-    aliases: ["whereami"],
+    aliases: ["whereami", "here"],
     run() {
       let store = useGameStore();
       let room = getRoomById(store.currentRoom);
