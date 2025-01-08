@@ -21,9 +21,6 @@
 </template>
 
 <script>
-import { randomElement } from "utilities/array.js";
-import { COLOURS } from "utilities/colours";
-
 export default {
   props: ["input", "output", "colour"],
 

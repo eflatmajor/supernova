@@ -26,11 +26,6 @@
 
 import DefaultCommand from "commands/Default.vue";
 
-import { randomElement } from "utilities/array.js";
-import { COLOURS } from "utilities/colours";
-
-import "../interface.css";
-
 import { mapState } from "pinia";
 import { useGameStore } from "stores/game.js";
 
@@ -40,6 +35,8 @@ import { setStore } from "@/game/store.js";
 import { globalFlags } from "@/game/flags.js";
 import { statistics } from "@/game/statistics.js";
 import { commands } from "@/game/commands.js";
+
+import "../interface.css";
 
 export default {
   components: {
