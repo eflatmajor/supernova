@@ -90,31 +90,6 @@ import { rooms, getRoomById } from "@/game/rooms.js";
 
 const commands_ = [
   /*
-    Lists all the connections from the current room to other rooms.
-  */
-
-  {
-    trigger: "doors",
-    aliases: ["doorways"],
-    run() {
-      let room = getRoomById(currentRoom);
-      let connections = room?.connections ?? null;
-
-      if ( ! connections) {
-        return "There are no doors in this room."
-      }
-
-      let directions = Object.entries(connections).map(([direction, roomId]) => {
-        let newRoom = getRoomById(roomId);
-        let newRoomName = newRoom?.name ?? "unknown";
-        return `To the ${direction.toLowerCase()} lies a door to ${newRoomName}.`;
-      });
-
-      return directions;
-    }
-  },
-
-  /*
     Describe/explain an entity.
 
     If no entity is specified, then describe the current room.
