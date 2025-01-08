@@ -11,6 +11,10 @@ export default defineConfig({
         replacement: resolve(__dirname, './src')
       },
       {
+        find: 'game',
+        replacement: resolve(__dirname, './src/game')
+      },
+      {
         find: 'stores',
         replacement: resolve(__dirname, './src/stores')
       },
