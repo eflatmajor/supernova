@@ -1,10 +1,16 @@
 import { defineStore } from "pinia";
+import { FLAGS } from "game/flags.js";
 
 export const useGameStore = defineStore('game', {
   state() {
     return {
       colourScheme: "purple",
-      currentRoom: 1
+      currentRoom: 1,
+      flags: {
+        [FLAGS.NAVI_COMPUTER_LOCKED]: true,
+        [FLAGS.PROLOGUE_DRIVE_REPAIRED]: false
+
+      }
     };
   },
   persist: {

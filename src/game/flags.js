@@ -5,7 +5,7 @@
   or have not been done/seen/defeated/whatever.
 */
 
-export const globalFlags = {
-  NAVI_COMPUTER_LOCKED: true,
-  PROLOGUE_DRIVE_REPAIRED: false
+export const FLAGS = {
+  NAVI_COMPUTER_LOCKED: "naviComputedLocked",
+  PROLOGUE_DRIVE_REPAIRED: "prologueDriveRepaired"
 };
