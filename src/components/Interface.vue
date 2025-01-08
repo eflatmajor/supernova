@@ -141,6 +141,8 @@ export default {
 
       let [trigger, ...args] = input;
 
+      // TODO: A little hacky. Would require moving some of our state into Pinia
+      //       to do this properly.
       if (trigger === "clear") {
         this.output = [];
         return;
