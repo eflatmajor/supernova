@@ -75,11 +75,11 @@ export default {
   mounted() {
     let room = getRoomById(store.currentRoom);
 
-    for (let i = 0; i < 30; i++) {
-      this.output.push([
-        "rand", Math.random()
-      ]);
-    }
+    // for (let i = 0; i < 30; i++) {
+    //   this.output.push([
+    //     "rand", Math.random()
+    //   ]);
+    // }
 
     this.output.push([
       `Current Room: ${room.name}`, room.description
@@ -140,6 +140,11 @@ export default {
       this.inputText = "";
 
       let [trigger, ...args] = input;
+
+      if (trigger === "clear") {
+        this.output = [];
+        return;
+      }
 
       // console.info("Processing command.");
       // console.info("Trigger: ", trigger);
