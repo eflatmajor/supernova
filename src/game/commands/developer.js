@@ -1,5 +1,5 @@
 import { useGameStore } from "stores/game.js";
-import { FLAGS } from "game/flags.js";
+import { FLAGS } from "enums/flags.js";
 import { parseArgument } from "utilities/arguments.js";
 
 /*
@@ -70,13 +70,28 @@ export const commands = [
     Shows all statistics.
   */
 
-    {
-      trigger: "statistics",
-      aliases: [],
-      run() {
-        let store = useGameStore();
+  {
+    trigger: "statistics",
+    aliases: [],
+    run() {
+      let store = useGameStore();
 
-        return JSON.stringify(store.statistics, null, 2);
-      }
+      return JSON.stringify(store.statistics, null, 2);
     }
+  },
+
+  /*
+    Resets the state in the Pinia store.
+  */
+
+  {
+    trigger: "reset",
+    aliases: [],
+    run() {
+      let store = useGameStore();
+      store.$reset();
+
+      return "The state store has been reset!";
+    }
+  }
 ];
