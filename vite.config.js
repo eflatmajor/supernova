@@ -15,6 +15,10 @@ export default defineConfig({
         replacement: resolve(__dirname, './src/game')
       },
       {
+        find: 'enums',
+        replacement: resolve(__dirname, './src/game/enums')
+      },
+      {
         find: 'stores',
         replacement: resolve(__dirname, './src/stores')
       },
