@@ -2,6 +2,8 @@ import { useGameStore } from "stores/game.js";
 import { FLAGS } from "enums/flags.js";
 import { parseArgument } from "utilities/arguments.js";
 
+console.log("!!! dev cmds !!!", FLAGS);
+
 /*
   Developer commands.
 */
@@ -72,7 +74,7 @@ export const commands = [
 
   {
     trigger: "statistics",
-    aliases: [],
+    aliases: ["stats"],
     run() {
       let store = useGameStore();
 
