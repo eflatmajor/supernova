@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import { FLAGS } from "game/flags.js";
-import { STATISTICS } from "game/statistics.js";
+import { FLAGS } from "enums/flags.js";
+import { STATISTICS } from "enums/statistics.js";
 
 export const useGameStore = defineStore('game', {
   state() {
@@ -8,12 +8,14 @@ export const useGameStore = defineStore('game', {
       colourScheme: "purple",
       currentRoom: 1,
       flags: {
-        [FLAGS.NAVI_COMPUTER_LOCKED]: true,
+        [FLAGS.PROLOGUE_NAVI_COMPUTER_LOCKED]: true,
         [FLAGS.PROLOGUE_DRIVE_REPAIRED]: false
 
       },
       statistics: {
-        [STATISTICS.MINUTES_PLAYED]: 0
+        [STATISTICS.MINUTES_PLAYED]: 0,
+        [STATISTICS.KILLS]: 0,
+        [STATISTICS.DEATHS]: 0
       }
     };
   },
