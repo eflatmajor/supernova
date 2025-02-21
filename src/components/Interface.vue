@@ -33,6 +33,7 @@ let store; /* Must defer! */
 
 // import { FLAGS } from "game/flags.js";
 // import { STATISTICS } from "game/statistics.js";
+
 import { commands as commandsMain } from "commands/main.js";
 import { commands as commandsDevel } from "commands/developer.js";
 
@@ -40,7 +41,7 @@ const commands = [...commandsMain, ...commandsDevel];
 
 import { getRoomById } from "game/rooms.js";
 
-import "../interface.css";
+import "../assets/styles/interface.css";
 
 export default {
   components: {
@@ -93,6 +94,9 @@ export default {
   },
 
   methods: {
+    // TODO: Instead of having refs for every command entry we could just have
+    //       an invisible like 1x1 div below the loop that renders the commands
+    //       and scrollIntoView on THAT instead.
     scroll() {
       let index = this.$refs.cmdEntry?.length - 1;
       let latestEntry = this.$refs.cmdEntry?.[index];
@@ -150,28 +154,31 @@ export default {
         return;
       }
 
-      // console.info("Processing command.");
-      // console.info("Trigger: ", trigger);
-      // console.info("Arguments: ", args);
+      console.debug(`Processing command w/ trigger - ${trigger}`);
+      console.debug("Arguments: ", args);
 
       let command = commands.find(cmd => cmd.trigger === trigger);
 
       if ( ! command) {
-        command = commands.find(cmd => cmd.aliases.includes(trigger));
+        command = commands.find(cmd => cmd?.aliases?.includes(trigger)) ?? false;
       }
 
       if ( ! command) {
         return console.warn(`Unknown command: ${trigger}`);
       }
 
+      this.$emit('commandBefore', command.trigger, ...args);
+
       let result = command.run(...args);
 
-      // this.output.push([input.join(" "), result]);
-      this.output.push([trigger, result]);
+      console.debug(`Command has ran w/ result - `, result);
 
-      this.$nextTick(() => {
-        this.scroll();
-      });
+      if (result !== false) {
+        this.output.push([command.trigger, result]);
+        this.$nextTick(() => this.scroll());
+      }
+
+      this.$emit('commandAfter', command.trigger, result);
     }
   },
 
