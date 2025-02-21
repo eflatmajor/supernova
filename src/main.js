@@ -5,7 +5,8 @@ import { createPinia } from "pinia";
 import App from './App.vue';
 import pinia from "@/pinia.js";
 
-import './colours.css';
+import './assets/styles/reset.css';
+import './assets/styles/colours.css';
 
 const app = createApp(App);
 app.use(pinia);
