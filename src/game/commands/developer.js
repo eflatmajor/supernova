@@ -9,6 +9,25 @@ import { parseArgument } from "utilities/arguments.js";
 export const commands = [
 
   /*
+    UI Testing
+  */
+
+    {
+      trigger: "infobar",
+      aliases: ["bar"],
+      run() {
+        return false;
+      }
+    },
+
+    {
+      trigger: "overlay",
+      run() {
+        return false;
+      }
+    },
+
+  /*
     Testing command for testing purposes.
   */
 
