@@ -10,6 +10,8 @@
 
 # Collectibles
 
+## Mainstream
+
 - [x] Mass Effect
 - [x] The Expanse
 - [x] Dr. Who
@@ -29,3 +31,10 @@
 - [ ] Babylon 5
 - [ ] The Orville
 - [ ] Hitchhiker's Guide to the Galaxy
+- [ ] Red Dwarf
+
+## Game Projects of Friends
+
+We should include also collectable sets with references to sci-fi game projects that our friends are working on!
+
+- [ ] Dimenshock (@Gyton)
