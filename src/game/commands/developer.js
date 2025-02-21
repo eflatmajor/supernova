@@ -13,8 +13,8 @@ export const commands = [
   */
 
   {
-    trigger: "rand",
-    aliases: ["random"],
+    trigger: "random",
+    aliases: ["rand"],
     run() {
       return Math.random();
     }
