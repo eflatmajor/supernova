@@ -22,10 +22,10 @@ export const useGameStore = defineStore('game', {
   persist: {
     debug: true,
     beforeHydrate(context) {
-      console.info(`beforeHydrate - ${context.store.$id}.`);
+      // console.debug(`beforeHydrate - ${context.store.$id}.`);
     },
     afterHydrate(context) {
-      console.info(`afterHydrate - ${context.store.$id}.`);
+      // console.debug(`afterHydrate - ${context.store.$id}.`);
     }
   },
   getters: {},
