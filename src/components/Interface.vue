@@ -6,6 +6,8 @@
       <div v-for="[input, output] in output" ref="cmdEntry">
         <Default-Command :input="input" :output="output" />
       </div>
+
+      <div id="scroll-anchor" ref="scrollAnchor" />
     </div>
 
     <div id="command-input">
@@ -94,15 +96,11 @@ export default {
   },
 
   methods: {
-    // TODO: Instead of having refs for every command entry we could just have
-    //       an invisible like 1x1 div below the loop that renders the commands
-    //       and scrollIntoView on THAT instead.
     scroll() {
-      let index = this.$refs.cmdEntry?.length - 1;
-      let latestEntry = this.$refs.cmdEntry?.[index];
+      let scrollAnchor = this.$refs.scrollAnchor;
 
-      if (latestEntry) {
-        latestEntry.scrollIntoView();
+      if (scrollAnchor) {
+        scrollAnchor.scrollIntoView();
       }
     },
 
@@ -211,6 +209,11 @@ div#command-output {
   height: calc(100vh - 32px);
   padding: 1em 1em 0 1em;
   overflow-y: scroll;
+}
+
+div#scroll-anchor {
+  height: 1px;
+  width: 1px;
 }
 
 input {
