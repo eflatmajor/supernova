@@ -35,6 +35,10 @@ export default defineConfig({
         replacement: resolve(__dirname, './src/utilities')
       },
       {
+        find: 'scenes',
+        replacement: resolve(__dirname, './src/scenes')
+      },
+      {
         find: 'items',
         replacement: resolve(__dirname, './data/items')
       },
