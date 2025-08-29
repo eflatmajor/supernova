@@ -1,0 +1,248 @@
+<template>
+  <Screen>
+    <canvas id="screen-canvas" ref="canvas" :width="width" :height="height">
+    </canvas>
+
+    <div id="framerate" v-if="drawFrameRate">{{ fps }} FPS</div>
+
+    <div id="screen-content" class="center" v-if="drawSlottedContent">
+      <slot>
+        <h1>Hi!</h1>
+      </slot>
+    </div>
+  </Screen>
+</template>
+
+<script>
+import { useMouse, useWindowSize, onKeyStroke } from "@vueuse/core";
+
+import Screen from "components/Screen.vue";
+
+export default {
+  components: { Screen },
+
+  props: ["load", "setup", "update", "render", "input", "clearScreen", "fpsCounter", "renderSlottedContent"],
+
+  setup() {
+    const { x: mouseX, y: mouseY } = useMouse();
+    const { width, height } = useWindowSize();
+
+    return { width, height, mouseX, mouseY };
+  },
+
+  data() {
+    return {
+      id: -1,
+
+      canvas: null,
+      context: null,
+
+      assets: {},
+
+      fnLoad: async () => true,
+      fnSetup:  () => {},
+      fnUpdate: () => {},
+      fnRender: () => {},
+      fnInput: () => {},
+
+      fps: 0.0,
+      timestamp: 0,
+      prevTimestamp: Number.MIN_SAFE_INTEGER,
+      deltaTime: 0,
+      frameCount: 0,
+      fpsUpdateRate: 30, // Update the FPS every *this many* frames.
+
+      logFrameRate: false, // Log FPS to console every `fpsUpdateRate` frames.
+      drawFrameRate: this.fpsCounter, // Draw FPS overlay in top-left corner.
+      doClear: this.clearScreen, // Automatically clear the canvas.
+      drawSlottedContent: this.renderSlottedContent // Display any HTML passed to default slot?
+    };
+  },
+
+  mounted() {
+    //
+    // Set up canvas, rendering context and hook up related callbacks
+    //
+
+    this.canvas = this.$refs?.canvas ?? null;
+    this.context = this?.canvas?.getContext("2d") ?? null;
+
+    window.canvas = this.canvas;
+    window.context = this.context;
+
+    if ( ! this.canvas || ! this.context) {
+      console.error("<CanvasScreen /> - could not obtain reference to canvas context. Exiting early!");
+      return;
+    }
+
+    if (typeof this.load === "function") {
+      this.fnLoad = this.load.bind(this);
+    }
+
+    if (typeof this.setup === "function") {
+      this.fnSetup = this.setup.bind(this);
+    }
+
+    if (typeof this.update === "function") {
+      this.fnUpdate = this.update.bind(this);
+    }
+
+    if (typeof this.render === "function") {
+      this.fnRender = this.render.bind(this);
+    }
+
+    if (typeof this.input === "function") {
+      this.fnInput = this.input.bind(this);
+    }
+
+    //
+    // Listen for keyboard events
+    //
+
+    onKeyStroke(true, (e) => {
+      // console.log("onKeyStroke", e);
+      this.fnInput(e);
+    });
+
+    //
+    // Load assets, run setup, begin update/render loop.
+    //
+
+    let promise = this.fnLoad()
+      .then(() => {
+        this.fnSetup();
+        this.doLoop(0);
+      })
+      .catch(console.error);
+  },
+
+  methods: {
+    bindMethod(func) {
+      const name = func.name || null;
+
+      if ( ! name) {
+        console.warn(`bindMethod() - Unnamed function passed!`, func);
+        return;
+      }
+
+      if (this[name]) {
+        console.warn(`bindMethod() - "${name}" is overriding an existing property!`);
+      }
+
+      this[name] = func.bind(this);
+      console.info(`bindMethod() - Bound method "${name}".`);
+    },
+
+    bindMethods(functions) {
+      if ( ! Array.isArray(functions)) {
+        return console.warn("bindMethods() expected array containing functions!");
+      }
+
+      for (let func of functions) {
+        this.bindMethod(func);
+      }
+    },
+
+    async addAsset(name, path) {
+      console.info(`Adding asset "${name}" with path "${path}".`);
+
+      if (this.assets[name]) {
+        return console.warn(`Attempted overwrite of asset with name - "${name}"!`);
+      }
+
+      const assetURL = new URL(path, import.meta.url).href;
+      const asset = new Image();
+      asset.src = assetURL;
+
+      this.assets[name] = asset;
+
+      return asset.decode();
+    },
+
+    async addAssets(assets) {
+      if ( ! Array.isArray(assets)) {
+        return console.warn("addAssets() expected array containing arrays of [name, path]!");
+      }
+
+      let promises = [];
+
+      for (let asset of assets) {
+        let [name, path] = asset;
+        if ( ! name || ! path) {
+          console.warn(`Skipping asset (${name}/${path}) due to empty name or path.`);
+          continue;
+        }
+
+        promises.push(this.addAsset(name, path));
+      }
+
+      return Promise.all(promises);
+    },
+
+    doLoop(timestamp) {
+      this.timestamp = timestamp;
+      this.frameCount++;
+
+      if( ! this.prevTimestamp) {
+        this.prevTimestamp = this.timestamp;
+      }
+
+      this.deltaTime = this.timestamp - this.prevTimestamp;
+
+      if (this.doClear) {
+        this.context.clearRect(0, 0, this.width, this.height);
+      }
+
+      this.fnUpdate(this.timestamp, this.deltaTime);
+      this.fnRender(this.timestamp, this.deltaTime);
+
+      if (this.frameCount % this.fpsUpdateRate === 0) {
+        this.fps = (1000 / this.deltaTime).toFixed(2);
+
+        if (this.logFrameRate) {
+          console.log(`${this.fps} FPS`);
+        }
+      }
+
+      window.requestAnimationFrame((ts) => this.doLoop(ts));
+      this.prevTimestamp = this.timestamp;
+    }
+  }
+};
+</script>
+
+<style scoped>
+canvas#screen-canvas {
+  height: 100vh;
+  width: 100vw;
+  background-color: #070a19;
+  image-rendering: pixelated;
+}
+
+div#screen-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+div#screen-content.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div#framerate {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: black;
+  color: white;
+  opacity: 0.85;
+  border-radius: 6px;
+  padding: 1em;
+}
+</style>
