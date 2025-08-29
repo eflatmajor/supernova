@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 supernova.code-workspace
+
+# Temporarily hide Obsidian notes, until they're more... refined/complete.
+obsidian
