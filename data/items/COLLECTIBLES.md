@@ -15,7 +15,7 @@
 - [x] Mass Effect
 - [x] The Expanse
 - [x] Dr. Who
-- [ ] Stargate SG-1
+- [ ] Stargate SG-1 / Atlantis / Universe
 - [ ] Halo
 - [ ] Firefly
 - [ ] Battlestar Galactica
@@ -26,12 +26,14 @@
 - [ ] The Matrix
 - [ ] Bladerunner
 - [ ] Men in Black
-- [ ] Marvel CInematic Universe
+- [ ] Marvel Cinematic Universe
 - [ ] X-Files
 - [ ] Babylon 5
 - [ ] The Orville
 - [ ] Hitchhiker's Guide to the Galaxy
 - [ ] Red Dwarf
+- [ ] Star Citizen
+- [ ] Dead Space
 
 ## Game Projects of Friends
 
