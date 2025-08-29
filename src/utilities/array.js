@@ -2,6 +2,18 @@ function randomElement(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
+function takeElement(array) {
+  if (array.length === 0) {
+    return null;
+  }
+
+  let index = randomIndex(array);
+  let element = array[index];
+  array.splice(index, 1);
+
+  return element;
+}
+
 function randomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
@@ -37,4 +49,4 @@ function randomSequence(id, elements) {
   }
 }
 
-export { randomElement, randomIndex, randomSequence }
+export { randomElement, randomIndex, randomSequence, takeElement }
