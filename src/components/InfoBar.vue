@@ -2,9 +2,11 @@
   <div id="info_bar">
     <nav>
       <ul>
-        <li>❤️ <sub>x</sub><span title="Current Hitpoints">{{ health }}</span></li>
-        <li>🛡️ <sub>x</sub><span title="Shield Capacity">{{ shields }}</span></li>
-        <li>💰 <sub>x</sub><span title="Credits Owned">{{ money }}</span></li>
+        <slot>
+          <li>❤️ <sub>x</sub><span title="Current Hitpoints">{{ health }}</span></li>
+          <li>🛡️ <sub>x</sub><span title="Shield Capacity">{{ shields }}</span></li>
+          <li>💰 <sub>x</sub><span title="Credits Owned">{{ money }}</span></li>
+      </slot>
       </ul>
     </nav>
   </div>
