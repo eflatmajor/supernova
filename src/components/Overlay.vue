@@ -35,6 +35,7 @@ export default {
 <style>
 div.overlay {
   font-family: monospace;
+  /* Detect if we need to do the calc() (to avoid <Interface>'s input)! */
   height: calc(100vh - 32px);
   width: 100vw;
   padding: 1em;
