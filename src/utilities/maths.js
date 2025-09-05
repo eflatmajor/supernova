@@ -89,4 +89,27 @@ function wrap(num, limit) {
   return (num % limit + limit) % limit;
 }
 
-export { Vector2, randomInt, randomFloat, randomRGB, clamp, map, remapRange, wrap };
+function lerp(start, stop, amount) {
+  return start + (stop - start) * amount;
+};
+
+function lerpClamped(start, stop, amount) {
+  amount = Math.max(0, Math.min(1, amount));
+  return start + (stop - start) * amount;
+};
+
+function lerpWrapped(start, stop, amount) {
+  amount = amount % 1;
+  return start + (stop - start) * amount;
+}
+
+function oscillate(t, length) {
+  if (length === 0) return 0;
+
+  const cycle = Math.floor(t / length);
+  const position = t % length;
+
+  return (cycle % 2 === 0) ? position : length - position;
+}
+
+export { Vector2, randomInt, randomFloat, randomRGB, clamp, map, remapRange, wrap, lerp, oscillate };
