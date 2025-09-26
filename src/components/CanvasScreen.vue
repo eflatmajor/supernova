@@ -21,7 +21,18 @@ import Screen from "components/Screen.vue";
 export default {
   components: { Screen },
 
-  props: ["load", "setup", "update", "render", "input", "clearScreen", "fpsCounter", "renderSlottedContent"],
+  props: [
+    "load",
+    "setup",
+    "update",
+    "update30TPS",
+    "update15TPS",
+    "render",
+    "input",
+    "clearScreen",
+    "fpsCounter",
+    "renderSlottedContent"
+  ],
 
   setup() {
     const { x: mouseX, y: mouseY } = useMouse();
@@ -39,19 +50,35 @@ export default {
 
       assets: {},
 
+      keybindings: {},
+
       fnLoad: async () => true,
       fnSetup:  () => {},
       fnUpdate: () => {},
+      fnUpdate30TPS: () => {},
+      fnUpdate15TPS: () => {},
       fnRender: () => {},
       fnInput: () => {},
 
+      loops: {
+        "30TPS": {
+          accumulator: 0,
+          interval: 1000 / 30
+        },
+        "15TPS": {
+          accumulator: 0,
+          interval: 1000 / 15
+        }
+      },
+
       fps: 0.0,
       timestamp: 0,
-      prevTimestamp: Number.MIN_SAFE_INTEGER,
+      prevTimestamp: 0,
       deltaTime: 0,
       frameCount: 0,
       fpsUpdateRate: 30, // Update the FPS every *this many* frames.
 
+      isPaused: false,
       logFrameRate: false, // Log FPS to console every `fpsUpdateRate` frames.
       drawFrameRate: this.fpsCounter, // Draw FPS overlay in top-left corner.
       doClear: this.clearScreen, // Automatically clear the canvas.
@@ -87,6 +114,14 @@ export default {
       this.fnUpdate = this.update.bind(this);
     }
 
+    if (typeof this.update30TPS === "function") {
+      this.fnUpdate30TPS = this.update30TPS.bind(this);
+    }
+
+    if (typeof this.update15TPS === "function") {
+      this.fnUpdate15TPS = this.update15TPS.bind(this);
+    }
+
     if (typeof this.render === "function") {
       this.fnRender = this.render.bind(this);
     }
@@ -96,13 +131,27 @@ export default {
     }
 
     //
+    // Register keybindings
+    //
+
+    this.addKeybinding("KeyP", function() {
+      console.log("pause keybinding pressed!", this);
+    });
+
+    //
     // Listen for keyboard events
     //
 
     onKeyStroke(true, (e) => {
-      // console.log("onKeyStroke", e);
+      this.checkForKeybindings(e.code);
       this.fnInput(e);
     });
+
+    //
+    // Global debugging stuff.
+    //
+    window.pause = () => this.isPaused = ! this.isPaused;
+    window.getCanvasScreen = () => this;
 
     //
     // Load assets, run setup, begin update/render loop.
@@ -179,6 +228,22 @@ export default {
       return Promise.all(promises);
     },
 
+    runSubLoops() {
+      this.loops["30TPS"].accumulator += this.deltaTime;
+
+      while (this.loops["30TPS"].accumulator >= this.loops["30TPS"].interval) {
+        this.fnUpdate30TPS(this.timestamp, this.deltaTime);
+        this.loops["30TPS"].accumulator -= this.loops["30TPS"].interval;
+      }
+
+      this.loops["15TPS"].accumulator += this.deltaTime;
+
+      while (this.loops["15TPS"].accumulator >= this.loops["15TPS"].interval) {
+        this.fnUpdate15TPS(this.timestamp, this.deltaTime);
+        this.loops["15TPS"].accumulator -= this.loops["15TPS"].interval;
+      }
+    },
+
     doLoop(timestamp) {
       this.timestamp = timestamp;
       this.frameCount++;
@@ -189,9 +254,15 @@ export default {
 
       this.deltaTime = this.timestamp - this.prevTimestamp;
 
+      if (this.paused) {
+        return;
+      }
+
       if (this.doClear) {
         this.context.clearRect(0, 0, this.width, this.height);
       }
+
+      this.runSubLoops();
 
       this.fnUpdate(this.timestamp, this.deltaTime);
       this.fnRender(this.timestamp, this.deltaTime);
@@ -206,6 +277,26 @@ export default {
 
       window.requestAnimationFrame((ts) => this.doLoop(ts));
       this.prevTimestamp = this.timestamp;
+    },
+
+    addKeybinding(code, callback) {
+      if ( ! this.keybindings[code]) {
+        this.keybindings[code] = [];
+      }
+
+      callback = callback.bind(this);
+
+      this.keybindings[code].push(callback);
+    },
+
+    checkForKeybindings(code) {
+      const bindings = this.keybindings?.[code] ?? [];
+
+      for (let callback of bindings) {
+        if (typeof callback === "function") {
+          callback();
+        }
+      }
     }
   }
 };
