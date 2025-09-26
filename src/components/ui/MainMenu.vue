@@ -3,6 +3,8 @@
     :load="load"
     :setup="setup"
     :update="update"
+    :update30TPS="update30TPS"
+    :update15TPS="update15TPS"
     :render="render"
     :input="input"
     :clearScreen="true"
@@ -18,7 +20,15 @@ import CanvasScreen from "components/CanvasScreen.vue";
 import { randomInt } from "utilities/maths";
 import * as sceneSolarSystem from "scenes/solar-system/scene";
 
-const { load, setup, update, render, input } = sceneSolarSystem;
+const {
+  load,
+  setup,
+  update,
+  update30TPS,
+  update15TPS,
+  render,
+  input
+} = sceneSolarSystem;
 
 export default {
   components: { CanvasScreen },
@@ -29,8 +39,10 @@ export default {
       load,
       setup,
       update,
+      update30TPS,
+      update15TPS,
       render,
-      input
+      input,
     };
   }
 };
