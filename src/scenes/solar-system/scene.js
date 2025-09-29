@@ -1,4 +1,4 @@
-import { randomInt, randomRGB, remapRange, wrap } from "utilities/maths";
+import { randomInt, randomRGB, remapRange, wrap, lerp, oscillate } from "utilities/maths";
 import { takeElement, randomElement } from "utilities/array";
 
 /*
@@ -49,6 +49,8 @@ function createStarfield() {
     let star = {
       x: randomInt(0, this.width),
       y: randomInt(0, this.height),
+
+      opacity: 1.0,
       asset: asset,
       size: asset.width,
       variant: "small"
@@ -131,6 +133,12 @@ function createNebulae() {
 
     this.nebulae.push(nebula);
   }
+}
+
+function createAsteroidBelt() {
+  console.log("[SCENE] solar-system: createAsteroidBelt()");
+
+
 }
 
 function createPlanets() {
@@ -230,19 +238,20 @@ export function setup() {
   this.context.imageSmoothingEnabled = false;
 
   //
-  // TEMPORARY:
-  //
-  // let _assets = load.bind(this);
-  // _assets();
-
-  //
   // Setup scene-global state.
   //
 
-  this.sun = { x: this.width / 2, y: this.height / 2, r: 42, brightness: 50 };
+  this.sun = {
+    x: this.width / 2,
+    y: this.height / 2,
+    r: 42,
+    brightness: 100
+  };
+
   this.stars = [];
   this.planets = [];
   this.nebulae = [];
+  this.asteroids = [];
 
   //
   // Bind scene-specific functions.
@@ -252,6 +261,7 @@ export function setup() {
     createPlanets,
     createStarfield,
     createNebulae,
+    createAsteroidBelt,
 
     renderStarField,
     renderSun,
@@ -259,7 +269,7 @@ export function setup() {
     renderPlanets,
     renderMoons,
     renderNebulae,
-    renderDebugMousePosition
+    renderDebugMousePosition,
   ]);
 
   //
@@ -274,6 +284,9 @@ export function setup() {
 
   this.createNebulae();
   console.log(`createNebulae() - Created (${this.nebulae.length}) nebulae.`, this.nebulae);
+
+  this.createAsteroidBelt();
+  console.log(`createAsteroidBelt() - Created (${this.asteroids.length}) asteroids.`, this.asteroids);
 }
 
 export function input(event) {
@@ -281,21 +294,28 @@ export function input(event) {
   console.log("[SCENE] solar-system: input", event);
 }
 
-export function update() {
-  // console.log("[SCENE] solar-system: update");
+export function update(t, dT) {
+  // console.log(`[SCENE] solar-system: update : 60Hz`);
 }
 
-export function render() {
+export function update30TPS(t, dT) {
+  // console.log("[SCENE] solar-system: (sub-)update @ 30Hz");
+}
+
+export function update15TPS(t, dT) {
+  // console.log("[SCENE] solar-system: (sub-)update @ 15Hz");
+}
+
+export function render(timeElapsed, timeDelta) {
   // console.log("[SCENE] solar-system: render");
 
-  this.renderStarField();
-  this.renderSun();
-  this.renderOrbitMarkers();
-  this.renderPlanets();
-  this.renderMoons();
-  this.renderNebulae();
-
-  // this.renderDebugMousePosition();
+  this.renderStarField(timeElapsed, timeDelta);
+  this.renderSun(timeElapsed, timeDelta);
+  this.renderOrbitMarkers(timeElapsed, timeDelta);
+  this.renderPlanets(timeElapsed, timeDelta);
+  this.renderMoons(timeElapsed, timeDelta);
+  this.renderNebulae(timeElapsed, timeDelta);
+  // this.renderDebugMousePosition(timeElapsed, timeDelta);
 }
 
 function renderStarField() {
@@ -327,8 +347,8 @@ function renderSun() {
 
   this.sun.brightness += 0.5;
 
-  if (this.sun.brightness > 150) {
-    this.sun.brightness = 50;
+  if (this.sun.brightness >= 400) {
+    this.sun.brightness = 100;
   }
 
   ctx.beginPath();
@@ -387,8 +407,8 @@ function renderNebulae() {
   }
 }
 
-function renderDebugMousePosition(context) {
-  const { context: ctx, width, height, mouseX, mouseY } = this;
+function renderDebugMousePosition() {
+  const { context: ctx, sun, width, height, mouseX, mouseY } = this;
 
   ctx.beginPath();
   ctx.font = "32px sans-serif";
