@@ -298,6 +298,16 @@ export default {
         }
       }
     }
+  },
+
+  computed: {
+    centerX() {
+      return this.width / 2;
+    },
+
+    centerY() {
+      return this.height / 2;
+    }
   }
 };
 </script>
