@@ -112,4 +112,14 @@ function oscillate(t, length) {
   return (cycle % 2 === 0) ? position : length - position;
 }
 
-export { Vector2, randomInt, randomFloat, randomRGB, clamp, map, remapRange, wrap, lerp, oscillate };
+const TAU = Math.PI * 2;
+
+function degreesToRadians(degrees) {
+  return degrees * (Math.PI / 180);
+}
+
+function radiansToDegrees(radians) {
+  return radians * (180 / Math.PI);
+}
+
+export { Vector2, randomInt, randomFloat, randomRGB, clamp, map, remapRange, wrap, lerp, oscillate, TAU, degreesToRadians, radiansToDegrees };
