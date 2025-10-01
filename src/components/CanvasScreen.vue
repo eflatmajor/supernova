@@ -225,7 +225,7 @@ export default {
         promises.push(this.addAsset(name, path));
       }
 
-      return Promise.all(promises);
+      return Promise.allSettled(promises);
     },
 
     runSubLoops() {
