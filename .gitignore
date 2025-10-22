@@ -25,6 +25,6 @@ dist-ssr
 supernova.code-workspace
 
 # Obsidian Notes
-.obsidian/plugins
-.obsidian/workspace.json
-.obsidian/workspace-mobile.json
+obsidian/.obsidian/plugins
+obsidian/.obsidian/workspace.json
+obsidian/.obsidian/workspace-mobile.json
