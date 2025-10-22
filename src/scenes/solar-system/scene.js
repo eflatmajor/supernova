@@ -1,4 +1,13 @@
-import { randomInt, randomRGB, remapRange, wrap, lerp, oscillate } from "utilities/maths";
+import {
+  randomInt,
+  randomRGB,
+  remapRange,
+  wrap,
+  lerp,
+  oscillate,
+  TAU,
+  degreesToRadians
+} from "utilities/maths";
 import { takeElement, randomElement } from "utilities/array";
 
 /*
@@ -138,7 +147,51 @@ function createNebulae() {
 function createAsteroidBelt() {
   console.log("[SCENE] solar-system: createAsteroidBelt()");
 
+  const ASTEROID_DISTANCE_FROM_SUN = 200;
+  const ASTEROID_SPAWN_COUNT_LARGE = 18;
+  const ASTEROID_SPAWN_COUNT_MEDIUM = 50;
+  const ASTEROID_SPAWN_COUNT_SMALL = 70;
+  const ASTEROID_POSITION_JITTER_MIN = 0; //-15;
+  const ASTEROID_POSITION_JITTER_MAX = 0; // 15;
+  const ASTEROID_RADIUS = 20;
 
+  const asteroidCount = ASTEROID_SPAWN_COUNT_LARGE;
+  const angleStep = TAU / asteroidCount;
+
+  for (let i = 0; i < asteroidCount; i++) {
+    const angle = i * angleStep;
+
+    const jitterX = randomInt(
+      ASTEROID_POSITION_JITTER_MIN,
+      ASTEROID_POSITION_JITTER_MAX
+    );
+    const jitterY = randomInt(
+      ASTEROID_POSITION_JITTER_MIN,
+      ASTEROID_POSITION_JITTER_MAX
+    )
+
+    // TODO: Make this be reactive for when the viewport is resized.
+    let x = this.centerX + ASTEROID_DISTANCE_FROM_SUN * Math.cos(angle);
+    let y = this.centerY + ASTEROID_DISTANCE_FROM_SUN * Math.sin(angle);
+
+    x += jitterX;
+    y += jitterY;
+
+    const asset = this.assets["asteroid-w-31x29-1"];
+    const width = asset.width;
+    const height = asset.height;
+    const rotation = degreesToRadians(randomInt(0, 360));
+
+    const asteroid = {
+      x, y, asset, width, height, rotation, radius: ASTEROID_RADIUS
+    };
+
+    console.log("rotation", asteroid.rotation);
+
+    this.asteroids.push(asteroid);
+  }
+
+  console.log("asteroids created", this.asteroids);
 }
 
 function createPlanets() {
@@ -226,6 +279,45 @@ export async function load() {
     ["star-yellow-s", "/celestial_bodies/stars/star-yellow-1x1.png"],
     ["star-yellow-m", "/celestial_bodies/stars/star-yellow-7x7.png"],
     ["star-yellow-l", "/celestial_bodies/stars/star-yellow-17x17.png"],
+
+    // Asteroids
+    ["asteroid-o-13x21-38", "/celestial_bodies/asteroids/asteroid-o-13x21-38.png"],
+    ["asteroid-o-13x26-37", "/celestial_bodies/asteroids/asteroid-o-13x26-37.png"],
+    ["asteroid-o-25x14-36", "/celestial_bodies/asteroids/asteroid-o-25x14-36.png"],
+    ["asteroid-w-10x16-27", "/celestial_bodies/asteroids/asteroid-w-10x16-27.png"],
+    ["asteroid-w-11x11-5", "/celestial_bodies/asteroids/asteroid-w-11x11-5.png"],
+    ["asteroid-w-12x16-6", "/celestial_bodies/asteroids/asteroid-w-12x16-6.png"],
+    ["asteroid-w-13x15-23", "/celestial_bodies/asteroids/asteroid-w-13x15-23.png"],
+    ["asteroid-w-13x16-7", "/celestial_bodies/asteroids/asteroid-w-13x16-7.png"],
+    ["asteroid-w-14x14-14", "/celestial_bodies/asteroids/asteroid-w-14x14-14.png"],
+    ["asteroid-w-14x35-28", "/celestial_bodies/asteroids/asteroid-w-14x35-28.png"],
+    ["asteroid-w-15x12-18", "/celestial_bodies/asteroids/asteroid-w-15x12-18.png"],
+    ["asteroid-w-15x13-4", "/celestial_bodies/asteroids/asteroid-w-15x13-4.png"],
+    ["asteroid-w-15x19-3", "/celestial_bodies/asteroids/asteroid-w-15x19-3.png"],
+    ["asteroid-w-15x19-9", "/celestial_bodies/asteroids/asteroid-w-15x19-9.png"],
+    ["asteroid-w-15x20-17", "/celestial_bodies/asteroids/asteroid-w-15x20-17.png"],
+    ["asteroid-w-16x27-16", "/celestial_bodies/asteroids/asteroid-w-16x27-16.png"],
+    ["asteroid-w-16x27-20", "/celestial_bodies/asteroids/asteroid-w-16x27-20.png"],
+    ["asteroid-w-17x17-21", "/celestial_bodies/asteroids/asteroid-w-17x17-21.png"],
+    ["asteroid-w-17x19-8", "/celestial_bodies/asteroids/asteroid-w-17x19-8.png"],
+    ["asteroid-w-18x18-22", "/celestial_bodies/asteroids/asteroid-w-18x18-22.png"],
+    ["asteroid-w-19x12-26", "/celestial_bodies/asteroids/asteroid-w-19x12-26.png"],
+    ["asteroid-w-19x18-2", "/celestial_bodies/asteroids/asteroid-w-19x18-2.png"],
+    ["asteroid-w-20x19-13", "/celestial_bodies/asteroids/asteroid-w-20x19-13.png"],
+    ["asteroid-w-20x23-19", "/celestial_bodies/asteroids/asteroid-w-20x23-19.png"],
+    ["asteroid-w-20x25-15", "/celestial_bodies/asteroids/asteroid-w-20x25-15.png"],
+    ["asteroid-w-21x17-24", "/celestial_bodies/asteroids/asteroid-w-21x17-24.png"],
+    ["asteroid-w-21x20-12", "/celestial_bodies/asteroids/asteroid-w-21x20-12.png"],
+    ["asteroid-w-23x26-11", "/celestial_bodies/asteroids/asteroid-w-23x26-11.png"],
+    ["asteroid-w-24x24-10", "/celestial_bodies/asteroids/asteroid-w-24x24-10.png"],
+    ["asteroid-w-24x25-25", "/celestial_bodies/asteroids/asteroid-w-24x25-25.png"],
+    ["asteroid-w-31x29-1", "/celestial_bodies/asteroids/asteroid-w-31x29-1.png"],
+    ["asteroid-y-12x19-31", "/celestial_bodies/asteroids/asteroid-y-12x19-31.png"],
+    ["asteroid-y-16x25-33", "/celestial_bodies/asteroids/asteroid-y-16x25-33.png"],
+    ["asteroid-y-20x19-34-35", "/celestial_bodies/asteroids/asteroid-y-20x19-34-35.png"],
+    ["asteroid-y-20x26-32", "/celestial_bodies/asteroids/asteroid-y-20x26-32.png"],
+    ["asteroid-y-21x19-29", "/celestial_bodies/asteroids/asteroid-y-21x19-29.png"],
+    ["asteroid-y-28x13-30", "/celestial_bodies/asteroids/asteroid-y-28x13-30.png"]
   ]);
 }
 
@@ -269,6 +361,7 @@ export function setup() {
     renderPlanets,
     renderMoons,
     renderNebulae,
+    renderAsteroidBelt,
     renderDebugMousePosition,
   ]);
 
@@ -315,6 +408,7 @@ export function render(timeElapsed, timeDelta) {
   this.renderPlanets(timeElapsed, timeDelta);
   this.renderMoons(timeElapsed, timeDelta);
   this.renderNebulae(timeElapsed, timeDelta);
+  this.renderAsteroidBelt(timeElapsed, timeDelta);
   // this.renderDebugMousePosition(timeElapsed, timeDelta);
 }
 
@@ -352,10 +446,14 @@ function renderSun() {
   }
 
   ctx.beginPath();
-  ctx.filter = `brightness(${Math.floor(this.sun.brightness)}%)`;
+  // ctx.filter = `brightness(${Math.floor(this.sun.brightness)}%)`;
   ctx.drawImage(this.assets.emberColossus, sunX, sunY);
   ctx.filter = "none";
   ctx.closePath();
+
+  ctx.fillStyle = "red";
+  ctx.arc(this.centerX, this.centerY, 5, 0, TAU);
+  ctx.fill();
 }
 
 function renderOrbitMarkers() {
@@ -403,6 +501,39 @@ function renderNebulae() {
     ctx.fill();
     */
 
+    ctx.closePath();
+  }
+}
+
+function renderAsteroidBelt() {
+  const { context: ctx, width, height } = this;
+
+  for (let asteroid of this.asteroids) {
+    ctx.save();
+    ctx.beginPath();
+
+    ctx.translate(
+      asteroid.x, // - (asteroid.width / 2),
+      asteroid.y // - (asteroid.height / 2)
+    );
+
+    ctx.rotate(asteroid.rotation);
+
+    ctx.drawImage(
+      asteroid.asset,
+      -asteroid.width / 2,
+      -asteroid.height / 2,
+      asteroid.width,
+      asteroid.height
+    );
+
+    /*
+    ctx.fillStyle = "red";
+    ctx.arc(0, 0, 5, 0, TAU);
+    ctx.fill();
+    */
+
+    ctx.restore();
     ctx.closePath();
   }
 }
